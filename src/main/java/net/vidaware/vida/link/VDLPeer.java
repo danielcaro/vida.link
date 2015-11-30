@@ -47,7 +47,7 @@ public class VDLPeer extends ChannelInboundHandlerAdapter implements Peer {
         this.peersManager = peersManager;
 
         // Setear el tiemout segun el tipo de dispositivo que se conecta
-        ch.pipeline().addBefore("zmtp-codec", "set-sotime", new ReadTimeoutHandler(30));
+        // ch.pipeline().addBefore("zmtp-codec", "set-sotime", new ReadTimeoutHandler(60));
     }
 
     @Override
@@ -62,21 +62,19 @@ public class VDLPeer extends ChannelInboundHandlerAdapter implements Peer {
             throws Exception {
         if (msg instanceof ZMTPMessage) {
             try {
-                log.info(((ZMTPMessage) msg).toString());
+                ZMTPMessage mensaje = (ZMTPMessage) msg;
+                
+                log.info(String.valueOf(mensaje));
 //                receiver.receive(this, (ZMTPMessage) msg);
 
-                ZMTPMessage msgnew = ZMTPMessage.fromUTF8("{total_devices: " + VDLChInit.channelGroup.size() + "}");
-
+//                ZMTPMessage msgnew = ZMTPMessage.fromUTF8("{total_devices: " + VDLChInit.channelGroup.size() + "}");
                 log.info("IN MSG: ZMTPSEssion( " + session.peerIdentity().getInt(1) + " )" + session);
 
                 for (final Peer peer : peersManager.peers()) {
-                    
-                    log.info("PEER DEST "+ peer.session().peerIdentity().getInt(1));
-                    //peer.send((ZMTPMessage) msg);
+                    log.info("PEER DEST " + peer.session().peerIdentity().getInt(1));
+                    peer.send(mensaje);
                 }
-                
-                send((ZMTPMessage) msg);
-                
+
             } catch (Exception e) {
                 log.error("handler threw exception", e);
             }
@@ -86,7 +84,8 @@ public class VDLPeer extends ChannelInboundHandlerAdapter implements Peer {
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause)
             throws Exception {
-        log.warn("exception: " + cause);
+        //log.warn("exception: " + cause);
+        log.error("EXC", cause);
         ctx.close();
     }
 
@@ -96,9 +95,10 @@ public class VDLPeer extends ChannelInboundHandlerAdapter implements Peer {
     }
 
     @Override
-    public ListenableFuture<Void> send(ZMTPMessage message) {
+    public ListenableFuture<Void> send(final ZMTPMessage message) {
         log.info("SEND :" + message);
-        final ChannelFuture f = ch.writeAndFlush(message);
+        ZMTPMessage newMsg =  message.retain();
+        final ChannelFuture f = ch.writeAndFlush(newMsg);        
         return listenable(f);
     }
 

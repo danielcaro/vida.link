@@ -47,7 +47,7 @@ public class VDLChInit extends ChannelInitializer {
         log.info("Nueva Conexión, total " + channelGroup.size());
 
         ZMTPCodec codec = ZMTPCodec.from(ZMTPConfig.builder().
-                socketType(ZMTPSocketType.DEALER).
+                socketType(ZMTPSocketType.ROUTER).
                 identityGenerator(new IdentityGenerator()).build());               
 
         //ch.pipeline().addLast("readTimeoutHandler", new ReadTimeoutHandler(30));
