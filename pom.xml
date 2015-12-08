@@ -118,7 +118,16 @@
             <artifactId>guava</artifactId>
             <version>18.0</version>           
         </dependency>
-                
-                                
+        <dependency>
+            <groupId>io.reactivex</groupId>
+            <artifactId>rxjava</artifactId>
+            <version>1.0.16</version>
+            <classifier>benchmarks</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.5</version>
+        </dependency>
     </dependencies>
 </project>

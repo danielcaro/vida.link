@@ -65,10 +65,9 @@ public class VDLChInit extends ChannelInitializer {
         private final AtomicInteger peerIdCounter = new AtomicInteger(new SecureRandom().nextInt());
 
         @Override
-        public ByteBuffer generateIdentity(final ZMTPSession session) {
-            
+        public ByteBuffer generateIdentity(final ZMTPSession session) {            
             final ByteBuffer generated = ByteBuffer.allocate(5);
-            generated.put((byte) 0);
+            //generated.put((byte) 0);
             int id = peerIdCounter.incrementAndGet();
             log.info("GENERANDO IDENT: " + id);
             generated.putInt(id);

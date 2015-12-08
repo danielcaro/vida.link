@@ -8,6 +8,9 @@ package net.vidaware.vida.link;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.spotify.netty4.handler.codec.zmtp.ZMTPHandshakeSuccess;
 import com.spotify.netty4.handler.codec.zmtp.ZMTPMessage;
 import com.spotify.netty4.handler.codec.zmtp.ZMTPSession;
@@ -26,6 +29,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import static net.vidaware.vida.link.ListenableFutureAdapter.listenable;
+import net.vidaware.vida.link.msgs.VDLMsg;
 
 /**
  *
@@ -57,24 +61,53 @@ public class VDLPeer extends ChannelInboundHandlerAdapter implements Peer {
 //                "Client " + ctx.channel().remoteAddress() + " connected");
     }
 
+    /**
+     * Create a human readable string representation of binary data, keeping
+     * printable ascii and hex encoding everything else.
+     *
+     * @param data The data
+     * @return A human readable string representation of the data.
+     */
+    private static String toString(final ByteBuf data) {
+        if (data == null) {
+            return null;
+        }
+        final StringBuilder sb = new StringBuilder();
+        for (int i = data.readerIndex(); i < data.writerIndex(); i++) {
+            final byte b = data.getByte(i);
+            if (b > 31 && b < 127) {
+                if (b == '%') {
+                    sb.append('%');
+                }
+                sb.append((char) b);
+            } else {
+                sb.append('%');
+                sb.append(String.format("%02X", b));
+            }
+        }
+        return sb.toString();
+    }
+
     @Override
     public void channelRead(final ChannelHandlerContext ctx, final Object msg)
             throws Exception {
         if (msg instanceof ZMTPMessage) {
             try {
                 ZMTPMessage mensaje = (ZMTPMessage) msg;
-                
-                log.info(String.valueOf(mensaje));
-//                receiver.receive(this, (ZMTPMessage) msg);
 
-//                ZMTPMessage msgnew = ZMTPMessage.fromUTF8("{total_devices: " + VDLChInit.channelGroup.size() + "}");
-                log.info("IN MSG: ZMTPSEssion( " + session.peerIdentity().getInt(1) + " )" + session);
+                String jsonMsg = toString(mensaje.frame(0));
 
-                for (final Peer peer : peersManager.peers()) {
-                    log.info("PEER DEST " + peer.session().peerIdentity().getInt(1));
-                    peer.send(mensaje);
-                }
+                log.info("IN MSG [" + jsonMsg +  "] ZMTPSEssion( " + session.peerIdentity().getInt(0) + " )" + session);
 
+                Gson gson =   new Gson();//new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
+                VDLMsg vdlMSG = gson.fromJson(jsonMsg, VDLMsg.class);
+                log.info("VDLMSG:" + vdlMSG);
+
+                /* // Repetir el mensaje a todos los equipos conectados
+                 for (final Peer peer : peersManager.peers()) {
+                 log.info("PEER DEST " + peer.session().peerIdentity().getInt(0));
+                 peer.send(mensaje);
+                 } */
             } catch (Exception e) {
                 log.error("handler threw exception", e);
             }
@@ -97,8 +130,9 @@ public class VDLPeer extends ChannelInboundHandlerAdapter implements Peer {
     @Override
     public ListenableFuture<Void> send(final ZMTPMessage message) {
         log.info("SEND :" + message);
-        ZMTPMessage newMsg =  message.retain();
-        final ChannelFuture f = ch.writeAndFlush(newMsg);        
+        // Es necesario generar un retain
+        ZMTPMessage newMsg = message.retain();
+        final ChannelFuture f = ch.writeAndFlush(newMsg);
         return listenable(f);
     }
 

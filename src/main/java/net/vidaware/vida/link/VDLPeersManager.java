@@ -42,7 +42,7 @@ public class VDLPeersManager implements PeersManager {
     public void register(final ByteBuffer identity, final VDLPeer peer) {
 
         synchronized (lock) {
-            log.info("Register:" + identity.getInt(1));
+            log.info("Register:" + identity.getInt(0));
             peers = ImmutableList.<Peer>builder()
                     .addAll(peers)
                     .add(peer)
@@ -57,7 +57,7 @@ public class VDLPeersManager implements PeersManager {
     @Override
     public  void deregister(final ByteBuffer identity) {
         synchronized (lock) {
-            log.info("DesRegister:" + identity.getInt(1));
+            log.info("DesRegister:" + identity.getInt(0));
             final ImmutableList.Builder<Peer> newPeers = ImmutableList.builder();
             for (final Peer peer : peers) {
                 if (peer != this) {
