@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.vidaware.vida.link.msgs;
+package link.vida.msgs;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.Date;
@@ -13,7 +13,6 @@ import java.util.Date;
  * @author dcaro
  */
 public class VDLMsg {
-
 
     private final String vdlClass;    
     private final VDLMsgData vdlMsg;

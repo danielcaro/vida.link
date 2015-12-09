@@ -14,7 +14,7 @@
  * the License.
  */
 
-package net.vidaware.vida.link;
+package link.vida.service;
 
 import com.google.common.util.concurrent.AbstractFuture;
 import com.google.common.util.concurrent.ListenableFuture;

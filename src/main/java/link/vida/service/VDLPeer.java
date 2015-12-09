@@ -3,33 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.vidaware.vida.link;
+package link.vida.service;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.spotify.netty4.handler.codec.zmtp.ZMTPHandshakeSuccess;
 import com.spotify.netty4.handler.codec.zmtp.ZMTPMessage;
 import com.spotify.netty4.handler.codec.zmtp.ZMTPSession;
-import com.spotify.netty4.util.BatchFlusher;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.timeout.ReadTimeoutHandler;
-import java.nio.ByteBuffer;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import static net.vidaware.vida.link.ListenableFutureAdapter.listenable;
-import net.vidaware.vida.link.msgs.VDLMsg;
+import static link.vida.service.ListenableFutureAdapter.listenable;
+import link.vida.msgs.VDLDecoder;
+import link.vida.msgs.VDLMsg;
+import link.vida.msgs.VDLTest;
 
 /**
  *
@@ -95,13 +85,31 @@ public class VDLPeer extends ChannelInboundHandlerAdapter implements Peer {
             try {
                 ZMTPMessage mensaje = (ZMTPMessage) msg;
 
+                // TODO : iterar sobre los mensajes ..
                 String jsonMsg = toString(mensaje.frame(0));
 
-                log.info("IN MSG [" + jsonMsg +  "] ZMTPSEssion( " + session.peerIdentity().getInt(0) + " )" + session);
+                log.info("IN MSG [" + jsonMsg + "] ZMTPSEssion( " + session.peerIdentity().getInt(0) + " )" + session);
 
-                Gson gson =   new Gson();//new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
-                VDLMsg vdlMSG = gson.fromJson(jsonMsg, VDLMsg.class);
-                log.info("VDLMSG:" + vdlMSG);
+                //new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
+                // VDLMsg vdlMSG = gson.fromJson(jsonMsg, VDLMsg.class);
+                // log.info("VDLMSG:" + vdlMSG);
+                Object obj = VDLDecoder.getObject(jsonMsg);
+
+                if(obj instanceof VDLTest){
+                    log.info(((VDLTest) obj).toString());
+                } else if(obj instanceof VDLMsg){
+
+                }
+
+                // Reflection
+                String className = obj.getClass().getName();
+                switch (className.substring(className.lastIndexOf('.') + 1)) {
+                    case "VDLTest":
+                        log.info(((VDLTest) obj).toString());
+                        break;
+                    default:
+                        log.info("class:" + className);
+                }
 
                 /* // Repetir el mensaje a todos los equipos conectados
                  for (final Peer peer : peersManager.peers()) {

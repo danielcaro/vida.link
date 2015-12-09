@@ -3,20 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.vidaware.vida.link;
+package link.vida.service;
 
 import com.spotify.netty4.handler.codec.zmtp.ZMTPCodec;
 import com.spotify.netty4.handler.codec.zmtp.ZMTPConfig;
 import com.spotify.netty4.handler.codec.zmtp.ZMTPIdentityGenerator;
-import com.spotify.netty4.handler.codec.zmtp.ZMTPMessage;
 import com.spotify.netty4.handler.codec.zmtp.ZMTPSession;
 import com.spotify.netty4.handler.codec.zmtp.ZMTPSocketType;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelPipeline;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
-import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
@@ -54,6 +51,10 @@ public class VDLChInit extends ChannelInitializer {
         ch.pipeline().addLast("zmtp-codec",codec);
         ch.pipeline().addLast("peer-handler",new VDLPeer(ch, codec.session(), peersManager));
     }
+    
+    public static PeersManager getPeersManager(){
+        return peersManager;
+    }
 
     /**
      * An identity generator that keeps an integer counter per
@@ -75,5 +76,6 @@ public class VDLChInit extends ChannelInitializer {
             return generated;
         }
     }
+        
 
 }

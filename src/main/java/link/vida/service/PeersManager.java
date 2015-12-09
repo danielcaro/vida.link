@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.vidaware.vida.link;
+package link.vida.service;
 
 import java.nio.ByteBuffer;
 import java.util.List;

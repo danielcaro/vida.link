@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.vidaware.vida.link;
+package link.vida.service;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -12,19 +12,19 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author dcaro
  */
-public class Broker {
+public class RunneableBroker implements Runnable {
 
-    /**
-     * @param args the command line arguments
-     */
     static final int PORT = Integer.parseInt(System.getProperty("port", "777"));
 
-    public static void main(String[] args) throws InterruptedException {
+    @Override
+    public void run() {
         EventLoopGroup bossGroup = new NioEventLoopGroup(2);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
@@ -38,12 +38,19 @@ public class Broker {
             ChannelFuture f = b.bind(PORT).sync();
             // Wait until the server socket is closed.
             f.channel().closeFuture().sync();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(RunneableBroker.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            bossGroup.shutdownGracefully();
-            workerGroup.shutdownGracefully();
-            // Wait until all threads are terminated.
-            bossGroup.terminationFuture().sync();
-            workerGroup.terminationFuture().sync();
+            try {
+                bossGroup.shutdownGracefully();
+                workerGroup.shutdownGracefully();
+                // Wait until all threads are terminated.
+                bossGroup.terminationFuture().sync();
+                workerGroup.terminationFuture().sync();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(RunneableBroker.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
+
 }
