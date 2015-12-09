@@ -57,11 +57,13 @@ public class VDLPeersManager implements PeersManager {
     @Override
     public  void deregister(final ByteBuffer identity) {
         synchronized (lock) {
-            log.info("DesRegister:" + identity.getInt(0));
+            log.info("Try DesRegister:" + identity.getInt(0));
             final ImmutableList.Builder<Peer> newPeers = ImmutableList.builder();
             for (final Peer peer : peers) {
-                if (peer != this) {
+                if (peer.session().peerIdentity().getInt(0) != identity.getInt(0)) {                    
                     newPeers.add(peer);
+                }else{
+                    log.info("DesRegister:" + identity.getInt(0));
                 }
             }
             peers = newPeers.build();

@@ -32,6 +32,7 @@ public class VDLTemplate extends WebPage {
         add(footerPanel = new FooterPanel("footerPanel"));
         add(new Label(CONTENT_ID, "Put your content here"));        
 
+        //https://cwiki.apache.org/confluence/display/WICKET/Simple+Sortable+DataTable+Example
         List<IColumn> columns = new ArrayList<>();
         columns.add(new PropertyColumn(new Model("ID ZMQ"), "id", "id"));
         DefaultDataTable table = new DefaultDataTable("datatable", columns, peersProvider, 10);
