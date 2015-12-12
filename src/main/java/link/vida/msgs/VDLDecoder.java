@@ -36,6 +36,8 @@ public class VDLDecoder {
         
         log.info("ClassName:" + className + " time:" + time  );
         
+        // https://github.com/google/gson/blob/master/UserGuide.md
+        // https://github.com/google/gson/blob/master/extras/src/main/java/com/google/gson/extras/examples/rawcollections/RawCollectionsExample.java
         Class clazz = Class.forName("link.vida.msgs." + className);
         Object obj = new Gson().fromJson(jObj.get("obj").getAsJsonObject(),clazz );
 
