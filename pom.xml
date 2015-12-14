@@ -43,6 +43,18 @@
                 </excludes>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId> 
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <_include>-target/classes/META-INF/${project.artifactId}.bnd</_include> (4)
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
     
     <dependencies>
@@ -71,24 +83,25 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
-            <version>9.3.5.v20151012</version>
+            <version>9.3.6.v20151106</version>
         </dependency>
         
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
-            <version>9.3.5.v20151012</version>
+            <version>9.3.6.v20151106</version>
         </dependency> 
         
         
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-webapp</artifactId>
-            <version>9.3.5.v20151012</version>
+            <version>9.3.6.v20151106</version>
         </dependency> 
         
+
         
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-api</artifactId>
             <version>2.2.12</version>
@@ -113,8 +126,11 @@
             <version>2.2.8</version>
             <scope>compile</scope>
         </dependency>      
-      
         
+        <!-- CDI Weld -->
+        
+        <!--http://www.eclipse.org/jetty/documentation/current/framework-weld.html-->
+        <!--http://www.eclipse.org/jetty/documentation/current/startup-modules.html-->
         
         <!-- EL API -->
         <dependency>
@@ -129,8 +145,21 @@
             <version>2.2</version>
             <scope>runtime</scope>
         </dependency>
+
         
-        
+       
+        <dependency>
+            <groupId>net.bootsfaces</groupId>
+            <artifactId>bootsfaces</artifactId>
+            <version>0.7.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>5.3</version>
+            <scope>compile</scope>
+        </dependency>
         
         
         
@@ -212,6 +241,16 @@
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
             <version>3.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.barcode4j</groupId>
+            <artifactId>barcode4j-light</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.glxn</groupId>
+            <artifactId>qrgen</artifactId>
+            <version>1.4</version>
         </dependency>
     </dependencies>
 </project>

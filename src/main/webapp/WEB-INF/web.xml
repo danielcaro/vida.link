@@ -10,8 +10,8 @@
     with Jetty8 -->
     <listener>
         <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
-        <!-- with mojarra = com.sun.faces.config.ConfigureListener -->
-        <!-- https://jsflive.wordpress.com/2012/08/19/jsf-2-on-jetty-8/ -->
+         <!--with mojarra = com.sun.faces.config.ConfigureListener--> 
+         <!--https://jsflive.wordpress.com/2012/08/19/jsf-2-on-jetty-8/--> 
     </listener>
 
     <!-- File(s) appended to a request for a URL that is not mapped to a 
@@ -32,6 +32,8 @@
     <servlet-mapping>
         <servlet-name>faces</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
+        <url-pattern>*.jsf</url-pattern>
+        <url-pattern>/javax.faces.resource/*</url-pattern>
     </servlet-mapping>
     
     <!-- http://www.java-tutorial.ch/java-server-faces/jsf-project-stage -->
@@ -39,4 +41,6 @@
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
+
+    
 </web-app>

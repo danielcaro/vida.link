@@ -7,11 +7,9 @@ package link.vida.service;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.resource.ResourceCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
-
 /**
  *
  * @author dcaro
@@ -30,7 +28,7 @@ public class RunneableJSF implements Runnable{
                             new String[] {"./src/main/webapp", "./target"}));
             wac.setResourceAlias("/WEB-INF/classes/", "/classes/");
             
-                        
+//            wac.addEventListener(new Listener());        
             //wac.setInitParameter("useFileMappedBuffer", "false");
             server.setHandler(wac);
             server.setStopAtShutdown(true);
