@@ -90,32 +90,33 @@ public class VDLPeer extends ChannelInboundHandlerAdapter implements Peer {
 
                 log.info("IN MSG [" + jsonMsg + "] ZMTPSEssion( " + session.peerIdentity().getInt(0) + " )" + session);
 
-                //new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
-                // VDLMsg vdlMSG = gson.fromJson(jsonMsg, VDLMsg.class);
-                // log.info("VDLMSG:" + vdlMSG);
                 Object obj = VDLDecoder.getObject(jsonMsg);
 
-                if(obj instanceof VDLTest){
-                    log.info(((VDLTest) obj).toString());
-                } else if(obj instanceof VDLMsg){
-
-                }
-
-                // Reflection
-                String className = obj.getClass().getName();
-                switch (className.substring(className.lastIndexOf('.') + 1)) {
-                    case "VDLTest":
+                if (obj != null) {
+                    if (obj instanceof VDLTest) {
                         log.info(((VDLTest) obj).toString());
-                        break;
-                    default:
-                        log.info("class:" + className);
+                    } else if (obj instanceof VDLMsg) {
+
+                    }
+
+                    // Reflection
+                    String className = obj.getClass().getName();
+                    switch (className.substring(className.lastIndexOf('.') + 1)) {
+                        case "VDLTest":
+                            log.info(((VDLTest) obj).toString());
+                            break;
+                        default:
+                            log.info("class:" + className);
+                    }
                 }
 
-                /* // Repetir el mensaje a todos los equipos conectados
-                 for (final Peer peer : peersManager.peers()) {
-                 log.info("PEER DEST " + peer.session().peerIdentity().getInt(0));
-                 peer.send(mensaje);
-                 } */
+                // Repetir el mensaje a todos los equipos conectados
+                for (final Peer peer : peersManager.peers()) {
+                    if (!peer.getPeerId().equals(this.getPeerId())) {
+                        log.info("PEER DEST " + peer.session().peerIdentity().getInt(0));
+                        peer.send(mensaje);
+                    }
+                }
             } catch (Exception e) {
                 log.error("handler threw exception", e);
             }
@@ -165,6 +166,11 @@ public class VDLPeer extends ChannelInboundHandlerAdapter implements Peer {
         } catch (Exception e) {
             log.error("handler threw exception", e);
         }
+    }
+
+    @Override
+    public Integer getPeerId() {
+        return this.session.peerIdentity().getInt(0);
     }
 
 }

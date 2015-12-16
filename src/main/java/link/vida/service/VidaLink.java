@@ -20,7 +20,7 @@ public class VidaLink {
         
         (new Thread(new RunneableBroker())).start();
         
-        (new Thread(new RunneableWebConsole())).start();
+//        (new Thread(new RunneableWicket())).start();
         
         (new Thread(new RunneableWebService())).start();
         

@@ -5,7 +5,7 @@
  */
 package link.vida.service;
 
-import link.vida.webconsole.VDLinkApplication;
+import link.vida.wicket.VDLinkApplication;
 import org.apache.wicket.protocol.http.ContextParamWebApplicationFactory;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.protocol.http.WicketServlet;
@@ -17,7 +17,7 @@ import org.eclipse.jetty.servlet.ServletHolder;
  *
  * @author dcaro
  */
-public class RunneableWebConsole implements Runnable {
+public class RunneableWicket implements Runnable {
 
     @Override
     public void run() {

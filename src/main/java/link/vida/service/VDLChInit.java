@@ -48,7 +48,7 @@ public class VDLChInit extends ChannelInitializer {
                 socketType(ZMTPSocketType.ROUTER).
                 identityGenerator(new IdentityGenerator()).build());               
 
-        ch.pipeline().addLast("readTimeoutHandler", new ReadTimeoutHandler(30));
+//        ch.pipeline().addLast("readTimeoutHandler", new ReadTimeoutHandler(30));
         ch.pipeline().addLast("zmtp-codec",codec);
         ch.pipeline().addLast("peer-handler",new VDLPeer(ch, codec.session(), peersManager));
     }

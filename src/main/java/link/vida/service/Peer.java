@@ -20,6 +20,9 @@ public interface Peer {
      * @return 
      */
     ZMTPSession session();
+    
+    
+    Integer getPeerId();
 
     /**
      * Send a message to this peer.

@@ -5,15 +5,9 @@
  */
 package link.vida.msgs;
 
-
-import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-import link.vida.service.VDLPeer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.google.gson.*;
@@ -30,20 +24,23 @@ public class VDLDecoder {
 
     //  {"vdlMsg": {"data": "holasas", "time": "2015-12-08T10:05:31.575045Z"}, "vdlClass": "test"}
     public static Object getObject(String json) throws ParseException, ClassNotFoundException {
-        JsonObject jObj =  new JsonParser().parse(json).getAsJsonObject() ;
-        String className = jObj.get("class").getAsString();
-        Date time = ISO8601Utils.parse(jObj.get("time").getAsString(), new ParsePosition(0));
-        
-        log.info("ClassName:" + className + " time:" + time  );
-        
+        Object obj = null;
+        JsonObject jObj = new JsonParser().parse(json).getAsJsonObject();
+        try {
+            String className = jObj.get("class").getAsString();
+            Date time = ISO8601Utils.parse(jObj.get("time").getAsString(), new ParsePosition(0));
+
+            log.info("ClassName:" + className + " time:" + time);
+
         // https://github.com/google/gson/blob/master/UserGuide.md
-        // https://github.com/google/gson/blob/master/extras/src/main/java/com/google/gson/extras/examples/rawcollections/RawCollectionsExample.java
-        Class clazz = Class.forName("link.vida.msgs." + className);
-        Object obj = new Gson().fromJson(jObj.get("obj").getAsJsonObject(),clazz );
+            // https://github.com/google/gson/blob/master/extras/src/main/java/com/google/gson/extras/examples/rawcollections/RawCollectionsExample.java
+            Class clazz = Class.forName("link.vida.msgs." + className);
+            obj = new Gson().fromJson(jObj.get("obj").getAsJsonObject(), clazz);
+        } catch (java.lang.NullPointerException ex) {
+
+        }
 
         return obj;
     }
-
-
 
 }
