@@ -21,7 +21,7 @@ import org.eclipse.jetty.servlet.ServletHolder;
  *
  * @author dcaro
  */
-public class RunneableWebService implements Runnable {
+public class RunneableWebService extends Thread {
 
     // option
     // https://gist.github.com/dalegaspi/5060b04326965ea704ea

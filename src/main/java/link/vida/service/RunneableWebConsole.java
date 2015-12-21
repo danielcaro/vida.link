@@ -14,7 +14,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
  *
  * @author dcaro
  */
-public class RunneableJSF implements Runnable{
+public class RunneableWebConsole extends Thread{
 
     @Override
     public void run() {
@@ -22,7 +22,7 @@ public class RunneableJSF implements Runnable{
             Server server = new Server(8080);
             
             WebAppContext wac = new AliasEnhancedWebAppContext();
-            wac.setContextPath("/myapp");
+            wac.setContextPath("/admin");
             wac.setBaseResource(
                     new ResourceCollection(
                             new String[] {"./src/main/webapp", "./target"}));
@@ -35,7 +35,7 @@ public class RunneableJSF implements Runnable{
             server.start();
             server.join();
         } catch (Exception ex) {
-            Logger.getLogger(RunneableJSF.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RunneableWebConsole.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

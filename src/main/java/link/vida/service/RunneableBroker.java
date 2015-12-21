@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author dcaro
  */
-public class RunneableBroker implements Runnable {
+public class RunneableBroker extends Thread {
 
     static final int PORT = Integer.parseInt(System.getProperty("port", "777"));
 

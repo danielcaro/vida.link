@@ -25,14 +25,14 @@ public class VDLDecoder {
     //  {"vdlMsg": {"data": "holasas", "time": "2015-12-08T10:05:31.575045Z"}, "vdlClass": "test"}
     public static Object getObject(String json) throws ParseException, ClassNotFoundException {
         Object obj = null;
-        JsonObject jObj = new JsonParser().parse(json).getAsJsonObject();
         try {
+            JsonObject jObj = new JsonParser().parse(json).getAsJsonObject();
             String className = jObj.get("class").getAsString();
             Date time = ISO8601Utils.parse(jObj.get("time").getAsString(), new ParsePosition(0));
 
             log.info("ClassName:" + className + " time:" + time);
 
-        // https://github.com/google/gson/blob/master/UserGuide.md
+            // https://github.com/google/gson/blob/master/UserGuide.md
             // https://github.com/google/gson/blob/master/extras/src/main/java/com/google/gson/extras/examples/rawcollections/RawCollectionsExample.java
             Class clazz = Class.forName("link.vida.msgs." + className);
             obj = new Gson().fromJson(jObj.get("obj").getAsJsonObject(), clazz);
