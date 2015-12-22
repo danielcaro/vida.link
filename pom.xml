@@ -267,6 +267,12 @@
         
         
         <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-servlet</artifactId>
+            <version>4.0</version>
+        </dependency>        
+        
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.4-1206-jdbc42</version>
@@ -277,7 +283,20 @@
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-migrations</artifactId>
             <version>3.2.0</version>
+        </dependency>     
+        
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-multibindings</artifactId>
+            <version>4.0</version>
         </dependency>        
+        
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.3.0</version>
+        </dependency>        
+                      
         
         <dependency>
             <groupId>org.mybatis</groupId>
