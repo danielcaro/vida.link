@@ -5,13 +5,14 @@
  */
 package link.vida.admin.web.wicket.web;
 
+import com.google.inject.Inject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import link.vida.conn.zmq.Peer;
+import link.vida.conn.zmq.ZMQPeer;
 import link.vida.broker.PeerInfo;
-import link.vida.conn.zmq.VDLChInit;
+import link.vida.conn.zmq.ZMQChInit;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
@@ -21,8 +22,11 @@ import org.apache.wicket.model.IModel;
  * @author dcaro
  */
 public class PeersProvider extends SortableDataProvider {
-    
-    private List<PeerInfo> newList ;
+
+    private List<PeerInfo> newList;
+
+    @Inject
+    ZMQChInit zMQChInit;
 
     /**
      *
@@ -32,12 +36,12 @@ public class PeersProvider extends SortableDataProvider {
      */
     @Override
     public Iterator<PeerInfo> iterator(final long first, final long count) {
-        
+
         newList = new ArrayList<>();
-       
-        Iterator<Peer> peersIterator = VDLChInit.getPeersManager().peers().iterator();
+
+        Iterator<ZMQPeer> peersIterator = zMQChInit.getPeersManager().peers().iterator();
         while (peersIterator.hasNext()) {
-            PeerInfo peerInf =  new PeerInfo();
+            PeerInfo peerInf = new PeerInfo();
             peerInf.setId("" + peersIterator.next().getPeerId());
             newList.add(peerInf);
         }
@@ -48,7 +52,7 @@ public class PeersProvider extends SortableDataProvider {
 
     @Override
     public long size() {
-        return VDLChInit.getPeersManager().peers().size();
+        return zMQChInit.getPeersManager().peers().size();
     }
 
     @Override

@@ -5,6 +5,7 @@
  */
 package link.vida.conn.zmq;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -26,6 +27,10 @@ public class ConnZMQService extends Thread  implements ConnService{
 
     static final int PORT = Integer.parseInt(System.getProperty("port", "777"));
     private Integer connectorId;
+    
+    @Inject
+    ZMQChInit zMQChInit;
+
 
     @Override
     public void run() {
@@ -37,7 +42,7 @@ public class ConnZMQService extends Thread  implements ConnService{
             b.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
-                    .childHandler(new VDLChInit());
+                    .childHandler(zMQChInit);
             // Start the server.
             ChannelFuture f = b.bind(PORT).sync();
             // Wait until the server socket is closed.

@@ -25,9 +25,9 @@ public class VdlDao {
     
     
     public List<Peer> peersList(){        
-//        for(Peer peer: peersMapper.selectPeers()){
-//               log.info("PEER:" + peer);
-//        }
+        for(Peer peer: peersMapper.selectPeers()){
+               log.info("PEER:" + peer);
+        }
         return peersMapper.selectPeers();
     }
 

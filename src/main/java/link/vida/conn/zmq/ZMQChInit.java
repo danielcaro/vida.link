@@ -5,6 +5,7 @@
  */
 package link.vida.conn.zmq;
 
+import com.google.inject.Inject;
 import com.spotify.netty4.handler.codec.zmtp.ZMTPCodec;
 import com.spotify.netty4.handler.codec.zmtp.ZMTPConfig;
 import com.spotify.netty4.handler.codec.zmtp.ZMTPIdentityGenerator;
@@ -19,6 +20,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
 import java.util.concurrent.atomic.AtomicInteger;
+import link.vida.db.vdl.VdlDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,13 +28,18 @@ import org.slf4j.LoggerFactory;
  *
  * @author dcaro
  */
-public class VDLChInit extends ChannelInitializer {
+public class ZMQChInit extends ChannelInitializer {
 
     public static final ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
-    private static final Logger log = LoggerFactory.getLogger(VDLChInit.class);
+    private static final Logger log = LoggerFactory.getLogger(ZMQChInit.class);
 
-    private static final PeersManager peersManager = new VDLPeersManager();
+//    private static final PeersManager peersManager = new ZMQPeersManager();
+
+    @Inject
+    PeersManager peersManager;
     
+    @Inject
+    VdlDao vdlDao;
     /**
      * Al iniciar un canal sucede lo siguiente.
      *
@@ -40,20 +47,25 @@ public class VDLChInit extends ChannelInitializer {
      * @throws Exception
      */
     @Override
+
     protected void initChannel(final Channel ch) throws Exception {
         channelGroup.add(ch);
         log.info("Nueva Conexión, total " + channelGroup.size());
 
         ZMTPCodec codec = ZMTPCodec.from(ZMTPConfig.builder().
                 socketType(ZMTPSocketType.ROUTER).
-                identityGenerator(new IdentityGenerator()).build());               
+                identityGenerator(new IdentityGenerator()).build());
 
 //        ch.pipeline().addLast("readTimeoutHandler", new ReadTimeoutHandler(30));
-        ch.pipeline().addLast("zmtp-codec",codec);
-        ch.pipeline().addLast("peer-handler",new VDLPeer(ch, codec.session(), peersManager));
+        ch.pipeline().addLast("zmtp-codec", codec);
+        ch.pipeline().addLast("peer-handler", new ZMQPeerImpl(ch, codec.session(), peersManager));
+        
+       vdlDao.peersList();
     }
+        
     
-    public static PeersManager getPeersManager(){
+
+    public PeersManager getPeersManager() {
         return peersManager;
     }
 
@@ -67,7 +79,7 @@ public class VDLChInit extends ChannelInitializer {
         private final AtomicInteger peerIdCounter = new AtomicInteger(new SecureRandom().nextInt());
 
         @Override
-        public ByteBuffer generateIdentity(final ZMTPSession session) {            
+        public ByteBuffer generateIdentity(final ZMTPSession session) {
             final ByteBuffer generated = ByteBuffer.allocate(5);
             //generated.put((byte) 0);
             int id = peerIdCounter.incrementAndGet();
@@ -77,6 +89,5 @@ public class VDLChInit extends ChannelInitializer {
             return generated;
         }
     }
-        
 
 }

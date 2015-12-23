@@ -21,14 +21,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author dcaro
  */
-public class VDLPeersManager implements PeersManager {
+public class ZMQPeersManager implements PeersManager {
 
-    private static final Logger log = LoggerFactory.getLogger(VDLPeersManager.class);
+    private static final Logger log = LoggerFactory.getLogger(ZMQPeersManager.class);
 
     //Inmutable: que no pueden ser cambiados después de creados
     // Volatile: Que será comártido entre las hebras .
-    private volatile List<Peer> peers = ImmutableList.of();
-    private volatile Map<ByteBuf, Peer> routing = ImmutableMap.of();
+    private volatile List<ZMQPeer> peers = ImmutableList.of();
+    private volatile Map<ByteBuf, ZMQPeer> routing = ImmutableMap.of();
     // El lock del syncronized , debe ser final para ser compartido entre las hebras 
     private final Object lock = new Object();
 
@@ -39,15 +39,15 @@ public class VDLPeersManager implements PeersManager {
      * @param peer
      */
     @Override
-    public void register(final ByteBuffer identity, final VDLPeer peer) {
+    public void register(final ByteBuffer identity, final ZMQPeerImpl peer) {
 
         synchronized (lock) {
             log.info("Register:" + identity.getInt(0));
-            peers = ImmutableList.<Peer>builder()
+            peers = ImmutableList.<ZMQPeer>builder()
                     .addAll(peers)
                     .add(peer)
                     .build();
-            routing = ImmutableMap.<ByteBuf, Peer>builder()
+            routing = ImmutableMap.<ByteBuf, ZMQPeer>builder()
                     .putAll(routing)
                     .put(Unpooled.wrappedBuffer(identity), peer)
                     .build();
@@ -58,8 +58,8 @@ public class VDLPeersManager implements PeersManager {
     public  void deregister(final ByteBuffer identity) {
         synchronized (lock) {
             log.info("Try DesRegister:" + identity.getInt(0));
-            final ImmutableList.Builder<Peer> newPeers = ImmutableList.builder();
-            for (final Peer peer : peers) {
+            final ImmutableList.Builder<ZMQPeer> newPeers = ImmutableList.builder();
+            for (final ZMQPeer peer : peers) {
                 if (peer.session().peerIdentity().getInt(0) != identity.getInt(0)) {                    
                     newPeers.add(peer);
                 }else{
@@ -68,9 +68,9 @@ public class VDLPeersManager implements PeersManager {
             }
             peers = newPeers.build();
 
-            final ImmutableMap.Builder<ByteBuf, Peer> newRouting = ImmutableMap.builder();
+            final ImmutableMap.Builder<ByteBuf, ZMQPeer> newRouting = ImmutableMap.builder();
             final ByteBuf id = Unpooled.wrappedBuffer(identity);
-            for (final Map.Entry<ByteBuf, Peer> entry : routing.entrySet()) {
+            for (final Map.Entry<ByteBuf, ZMQPeer> entry : routing.entrySet()) {
                 if (!entry.getKey().equals(id)) {
                     newRouting.put(entry.getKey(), entry.getValue());
                 }
@@ -80,7 +80,7 @@ public class VDLPeersManager implements PeersManager {
     }
 
     @Override
-    public List<Peer> peers() {
+    public List<ZMQPeer> peers() {
         return peers;
     }
 }

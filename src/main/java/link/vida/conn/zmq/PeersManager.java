@@ -14,10 +14,10 @@ import java.util.List;
  */
 public interface PeersManager {
 
-    public void register(final ByteBuffer identity, final VDLPeer peer);
+    public void register(final ByteBuffer identity, final ZMQPeerImpl peer);
 
     public void deregister(final ByteBuffer identity);
 
-    public List<Peer> peers();
+    public List<ZMQPeer> peers();
 
 }

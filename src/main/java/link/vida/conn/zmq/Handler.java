@@ -16,15 +16,15 @@ public interface Handler {
     /**
      * A peer connected.
      */
-    void connected(Peer peer);
+    void connected(ZMQPeer peer);
 
     /**
      * A peer disconnected.
      */
-    void disconnected(Peer peer);
+    void disconnected(ZMQPeer peer);
 
     /**
      * A message was received from a peer.
      */
-    void message( Peer peer, ZMTPMessage message);
+    void message( ZMQPeer peer, ZMTPMessage message);
 }

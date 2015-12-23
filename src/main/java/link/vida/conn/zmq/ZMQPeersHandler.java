@@ -13,22 +13,22 @@ import org.slf4j.LoggerFactory;
  *
  * @author dcaro
  */
-public class VLDPeersHandler implements Handler {
+public class ZMQPeersHandler implements Handler {
 
-    private static final Logger log = LoggerFactory.getLogger(VLDPeersHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(ZMQPeersHandler.class);
 
     @Override
-    public void connected(Peer peer) {
+    public void connected(ZMQPeer peer) {
         log.info("CONNECTED");
     }
 
     @Override
-    public void disconnected(Peer peer) {
+    public void disconnected(ZMQPeer peer) {
         log.info("DISCONNECTED");
     }
 
     @Override
-    public void message(Peer peer, ZMTPMessage message) {
+    public void message(ZMQPeer peer, ZMTPMessage message) {
         log.info("MESSAGE");
     }
 

@@ -13,7 +13,7 @@ import com.spotify.netty4.handler.codec.zmtp.ZMTPSession;
  *
  * @author dcaro
  */
-public interface Peer {
+public interface ZMQPeer {
 
     /**
      * Get the ZMTP session for this peer.

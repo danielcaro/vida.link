@@ -7,6 +7,7 @@ package link.vida.conn.zmq;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
+import io.netty.channel.ChannelInitializer;
 import link.vida.conn.ConnService;
 import link.vida.conn.ws.ConnWebServiceJersey1;
 
@@ -17,7 +18,9 @@ import link.vida.conn.ws.ConnWebServiceJersey1;
 public class ModuleZMQ extends AbstractModule{
 
     @Override
-    protected void configure() {
+    protected void configure() {        
+        bind(PeersManager.class).to(ZMQPeersManager.class).asEagerSingleton();
+        bind(ChannelInitializer.class).to(ZMQChInit.class).asEagerSingleton();
         bind(ConnService.class).annotatedWith(Names.named("CONN.ZMQ")).to(ConnZMQService.class).asEagerSingleton();
     }
     

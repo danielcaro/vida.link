@@ -25,19 +25,19 @@ import link.vida.msgs.VDLTest;
  *
  * @author dcaro
  */
-public class VDLPeer extends ChannelInboundHandlerAdapter implements Peer {
+public class ZMQPeerImpl extends ChannelInboundHandlerAdapter implements ZMQPeer {
 
-    private static final Logger log = LoggerFactory.getLogger(VDLPeer.class);
+    private static final Logger log = LoggerFactory.getLogger(ZMQPeerImpl.class);
 
     private final Channel ch;
     private final ZMTPSession session;
     private final Handler handler;
     private final PeersManager peersManager;
 
-    public VDLPeer(final Channel ch, final ZMTPSession session, PeersManager peersManager) {
+    public ZMQPeerImpl(final Channel ch, final ZMTPSession session, PeersManager peersManager) {
         this.ch = ch;
         this.session = session;
-        this.handler = new VLDPeersHandler();
+        this.handler = new ZMQPeersHandler();
         this.peersManager = peersManager;
 
         // Setear el tiemout segun el tipo de dispositivo que se conecta
@@ -111,7 +111,7 @@ public class VDLPeer extends ChannelInboundHandlerAdapter implements Peer {
                 }
 
                 // Repetir el mensaje a todos los equipos conectados
-                for (final Peer peer : peersManager.peers()) {
+                for (final ZMQPeer peer : peersManager.peers()) {
                     if (!peer.getPeerId().equals(this.getPeerId())) {
                         log.info("PEER DEST " + peer.session().peerIdentity().getInt(0));
                         peer.send(mensaje);
