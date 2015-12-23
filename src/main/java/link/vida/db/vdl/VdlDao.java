@@ -6,6 +6,7 @@
 package link.vida.db.vdl;
 
 import com.google.inject.Inject;
+import java.util.List;
 import link.vida.db.Migrator;
 import link.vida.db.vdl.mappers.PeersMapper;
 import link.vida.db.vdl.models.Peer;
@@ -23,10 +24,11 @@ public class VdlDao {
     PeersMapper peersMapper;
     
     
-    public void printPeersList(){        
-        for(Peer peer: peersMapper.selectPeers()){
-               log.info("PEER:" + peer);
-        }        
+    public List<Peer> peersList(){        
+//        for(Peer peer: peersMapper.selectPeers()){
+//               log.info("PEER:" + peer);
+//        }
+        return peersMapper.selectPeers();
     }
 
 }

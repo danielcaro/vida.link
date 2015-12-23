@@ -93,6 +93,17 @@
             <version>9.3.6.v20151106</version>
         </dependency> 
         
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlets</artifactId>
+            <version>9.3.6.v20151106</version>
+        </dependency>         
+        
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
         
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
@@ -100,11 +111,13 @@
             <version>9.3.6.v20151106</version>
         </dependency>
         
+        
         <dependency>
             <groupId>com.thetransactioncompany</groupId>
             <artifactId>cors-filter</artifactId>
             <version>2.5</version>
         </dependency>
+        
         
         <!--        <dependency>
             <groupId>com.sun.faces</groupId>
@@ -119,6 +132,7 @@
         -->
       
         <!-- MY FACES -->
+        <!-- JSF , PRIMEFACES y EL -->
         <dependency>
             <groupId>org.apache.myfaces.core</groupId>
             <artifactId>myfaces-api</artifactId>
@@ -131,12 +145,9 @@
             <version>2.2.8</version>
             <scope>compile</scope>
         </dependency>      
-        
         <!-- CDI Weld -->
-        
         <!--http://www.eclipse.org/jetty/documentation/current/framework-weld.html-->
         <!--http://www.eclipse.org/jetty/documentation/current/startup-modules.html-->
-        
         <!-- EL API -->
         <dependency>
             <groupId>javax.el</groupId>
@@ -144,6 +155,7 @@
             <version>2.2</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
             <groupId>org.glassfish.web</groupId>
             <artifactId>el-impl</artifactId>
@@ -151,8 +163,6 @@
             <scope>runtime</scope>
         </dependency>
 
-        
-       
         <dependency>
             <groupId>net.bootsfaces</groupId>
             <artifactId>bootsfaces</artifactId>
@@ -169,8 +179,8 @@
         
         
         
-        <!-- JERSEY, WEB SERVICE -->
-        <dependency>
+        <!-- JERSEY2 , WEB SERVICE -->
+        <!--        <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-server</artifactId>
             <version>2.7</version>
@@ -190,9 +200,67 @@
             <artifactId>jersey-media-moxy</artifactId>
             <version>2.7</version>
         </dependency>
+           <dependency>
+            <groupId>org.glassfish.hk2</groupId>
+            <artifactId>guice-bridge</artifactId>
+            <version>2.3.0</version>
+        </dependency>-->
+        
+        <!-- JERSEY 1 , WEB SERVICE -->
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>1.19</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-servlet</artifactId>
+            <version>1.19</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.sun.jersey.contribs</groupId>
+            <artifactId>jersey-guice</artifactId>
+            <version>1.19</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+            <version>1.19</version>
+        </dependency>
         
         
-           
+        <!--- JACKSON FOR JERSEY -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.9.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-jaxrs</artifactId>
+            <version>1.9.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-xc</artifactId>
+            <version>1.9.13</version>
+        </dependency>
+        
+        
+        
+        
+        
+        
+        
+        <!-- WICKET -->
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-core</artifactId>
@@ -218,6 +286,8 @@
         </dependency>
         
         
+        
+        
         <!--http://www.mkyong.com/wicket/wicket-log4j-integration-example/-->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -237,16 +307,20 @@
             <version>1.0.16</version>
         </dependency>
         
+        
+        
+        
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.5</version>
         </dependency>
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>3.3.0</version>
-        </dependency>
+        
+        
+
+        
+        
+        <!-- QR y Barcode -->
         <dependency>
             <groupId>net.sf.barcode4j</groupId>
             <artifactId>barcode4j-light</artifactId>
@@ -258,19 +332,8 @@
             <version>1.4</version>
         </dependency>
         
-
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>4.0</version>
-        </dependency>
         
         
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-servlet</artifactId>
-            <version>4.0</version>
-        </dependency>        
         
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -278,7 +341,22 @@
             <version>9.4-1206-jdbc42</version>
         </dependency>        
      
-    
+        
+
+
+        <!--- GUICE y MYBATIS -->
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>4.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-servlet</artifactId>
+            <version>4.0</version>
+        </dependency>        
+        
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-migrations</artifactId>
@@ -296,7 +374,6 @@
             <artifactId>mybatis</artifactId>
             <version>3.3.0</version>
         </dependency>        
-                      
         
         <dependency>
             <groupId>org.mybatis</groupId>

@@ -5,8 +5,8 @@
  */
 package link.vida.conn.ws.services;
 
-
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -22,16 +22,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Path("/vdl")
+@Singleton
 public class WebServiceVDL {
 
     private static final Logger log = LoggerFactory.getLogger(WebServiceVDL.class);
-    
+
     @Inject
     VdlDao vdlDao;
 
     @GET
-    @Path("list")  
+    @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
+    // @Consumes(MediaType.APPLICATION_JSON)
     public List<PeerInfo> list() {
 
         List<PeerInfo> newList = new ArrayList<>();
@@ -41,9 +43,16 @@ public class WebServiceVDL {
             peerInf.setId("" + peersIterator.next().getPeerId());
             newList.add(peerInf);
         }
+
         log.info("RETURN:" + newList.size());
-        
-        vdlDao.printPeersList();
         return newList;
+    }
+    
+    
+    @GET
+    @Path("list_db")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<link.vida.db.vdl.models.Peer> listDB() {
+        return vdlDao.peersList();
     }
 }

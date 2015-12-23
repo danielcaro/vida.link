@@ -1,9 +1,11 @@
 package link.vida.app;
 
 import com.google.inject.AbstractModule;
-import link.vida.conn.zmq.RunneableBroker;
-import link.vida.admin.web.jsf.RunneableWebConsole;
-import link.vida.conn.ws.RunneableWebService;
+import link.vida.admin.AdminConnectorModule;
+import link.vida.admin.web.jsf.ModuleJSF;
+import link.vida.conn.ConnectorModule;
+import link.vida.conn.ws.ModuleWS;
+import link.vida.conn.zmq.ModuleZMQ;
 import link.vida.db.ConfigDB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,12 +22,19 @@ public class LoaderModule
         this.logger.info("Loading Modules...");
 
         install(new ConfigDB());
-
-
-//        bind(RunneableBroker.class).to(RunneableBroker.class).asEagerSingleton();
-//        bind(RunneableWebService.class).to(RunneableWebService.class).asEagerSingleton();
-//        bind(RunneableWebConsole.class).to(RunneableWebConsole.class).asEagerSingleton();
-
+        install(new ConnectorModule());
+        install(new AdminConnectorModule());        
+                      
+        //instalar modulos de Conexión
+        install(new ModuleWS());
+        install(new ModuleZMQ());
+        
+        
+        // conectorres de administración
+        install(new ModuleJSF());
+        
+        bind(ServiceManager.class).to(ServiceManagerImpl.class).asEagerSingleton();
+        
         this.logger.info("Modules Loaded");
     }
 }

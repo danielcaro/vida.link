@@ -15,15 +15,17 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import link.vida.conn.ConnService;
 
 /**
  *
  * @author dcaro
  */
 @Singleton
-public class RunneableBroker extends Thread {
+public class ConnZMQService extends Thread  implements ConnService{
 
     static final int PORT = Integer.parseInt(System.getProperty("port", "777"));
+    private Integer connectorId;
 
     @Override
     public void run() {
@@ -41,7 +43,7 @@ public class RunneableBroker extends Thread {
             // Wait until the server socket is closed.
             f.channel().closeFuture().sync();
         } catch (InterruptedException ex) {
-            Logger.getLogger(RunneableBroker.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConnZMQService.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 bossGroup.shutdownGracefully();
@@ -50,9 +52,27 @@ public class RunneableBroker extends Thread {
                 bossGroup.terminationFuture().sync();
                 workerGroup.terminationFuture().sync();
             } catch (InterruptedException ex) {
-                Logger.getLogger(RunneableBroker.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ConnZMQService.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
+    
+    
+
+    @Override
+    public String getConnName() {
+        return "CONN.ZMQ";
+    }
+
+    @Override
+    public Integer getConnectorId() {
+        return connectorId;
+    }
+
+    @Override
+    public void setConnectorId(Integer connectorId) {
+        this.connectorId = connectorId;
+    }
+
 
 }

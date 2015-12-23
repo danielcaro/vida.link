@@ -3,14 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package link.vida.app;
+package link.vida.admin;
 
 /**
  *
  * @author dcaro
  */
-public interface ServiceManager {
+public interface AdminConnService {
+
+    public String getAdminConnName();
     
+    public Integer getAdminConnectorId();
+
+    public void setAdminConnectorId(Integer connectorId);    
+
     public void start();
-    
+
+    public void stop();
+
 }
