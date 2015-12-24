@@ -5,18 +5,10 @@
  */
 package link.vida.session;
 
-import java.util.List;
-
 /**
  *
  * @author dcaro
  */
-public interface PeersManager {
-
-    public void register(final Integer identity, final VDLPeer peer);
-
-    public void deregister(final Integer identity);
-
-    public List<VDLPeer> peers();
-
+public interface VDLIdentityGenerator {
+    public Integer generateIdentity();
 }

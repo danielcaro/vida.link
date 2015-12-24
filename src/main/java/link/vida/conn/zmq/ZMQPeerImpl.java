@@ -5,6 +5,8 @@
  */
 package link.vida.conn.zmq;
 
+import link.vida.session.VDLPeerHandlerImpl;
+import link.vida.session.PeerHandler;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.spotify.netty4.handler.codec.zmtp.ZMTPHandshakeSuccess;
 import com.spotify.netty4.handler.codec.zmtp.ZMTPMessage;
@@ -14,6 +16,8 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import java.util.ArrayList;
+import java.util.List;
 import link.vida.app.VidaLink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +25,9 @@ import static link.vida.conn.zmq.ListenableFutureAdapter.listenable;
 import link.vida.msgs.VDLDecoder;
 import link.vida.msgs.VDLMsg;
 import link.vida.msgs.VDLTest;
+import link.vida.session.VDLPeersManager;
 import link.vida.session.VDLPeer;
+import link.vida.session.VDLSession;
 
 /**
  *
@@ -33,13 +39,13 @@ public class ZMQPeerImpl extends ChannelInboundHandlerAdapter implements VDLPeer
 
     private final Channel ch;
     private final ZMTPSession session;
-    private final ZMQPeerHandler handler;
-    private final ZMQPeersManager peersManager;
+    private final PeerHandler handler;
+    private final VDLPeersManager peersManager;
 
-    public ZMQPeerImpl(final Channel ch, final ZMTPSession session, ZMQPeersManager peersManager) {
+    public ZMQPeerImpl(final Channel ch, final ZMTPSession session, VDLPeersManager peersManager) {
         this.ch = ch;
         this.session = session;
-        this.handler = new ZMQPeersHandlerImpl();
+        this.handler = new VDLPeerHandlerImpl();
         VidaLink.injector.injectMembers(this.handler);
         this.peersManager = peersManager;
 
@@ -96,11 +102,18 @@ public class ZMQPeerImpl extends ChannelInboundHandlerAdapter implements VDLPeer
                 Object obj = VDLDecoder.getObject(jsonMsg);
 
                 if (obj != null) {
-                    if (obj instanceof VDLTest) {
+                     if (obj instanceof VDLMsg) {
+                        // Repetir el mensaje a todos los equipos conectados
+                        for (final VDLPeer peer : peersManager.peers()) {
+                            if (!peer.getPeerId().equals(this.getPeerId())) {
+                                log.info("PEER DEST " + peer.getPeerId());
+                                // transformar mensaje  de ZMQMessage to VLDMsg
+                                peer.send((VDLMsg) obj);
+                            }
+                        }
+                    }else if (obj instanceof VDLTest) {
                         log.info(((VDLTest) obj).toString());
-                    } else if (obj instanceof VDLMsg) {
-
-                    }
+                    } 
 
                     // Reflection
                     String className = obj.getClass().getName();
@@ -113,13 +126,6 @@ public class ZMQPeerImpl extends ChannelInboundHandlerAdapter implements VDLPeer
                     }
                 }
 
-                // Repetir el mensaje a todos los equipos conectados
-                for (final ZMQPeer peer : peersManager.peers()) {
-                    if (!peer.getPeerId().equals(this.getPeerId())) {
-                        log.info("PEER DEST " + peer.session().peerIdentity().getInt(0));
-                        peer.send(mensaje);
-                    }
-                }
             } catch (Exception e) {
                 log.error("handler threw exception", e);
             }
@@ -130,22 +136,25 @@ public class ZMQPeerImpl extends ChannelInboundHandlerAdapter implements VDLPeer
     public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause)
             throws Exception {
         //log.warn("exception: " + cause);
-        log.error("exceptionCaught"+  cause.toString());
+        log.error("exceptionCaught" + cause.toString());
         ctx.close();
     }
 
-    @Override
-    public VDLSession session() {
-        // Castear sesion a otra
-        return session;
-    }
+//    @Override
+//    public VDLSession session() {
+//        // Castear sesion a otra
+//        return (VDLSession) session;
+//    }
 
     @Override
     public ListenableFuture<Void> send(final VDLMsg message) {
         log.info("SEND :" + message);
         // Es necesario generar un retain
         // crear nuevo mensaje
-        ZMTPMessage newMsg = message.retain();
+        // Generar Encoder y Decoder de VDLMsg a ZMQ message
+        List<ByteBuf> frames = new ArrayList<>();
+        ZMTPMessage newMsg = ZMTPMessage.from(frames);
+//        ZMTPMessage newMsg = message.retain();
         final ChannelFuture f = ch.writeAndFlush(newMsg);
         return listenable(f);
     }
@@ -154,7 +163,7 @@ public class ZMQPeerImpl extends ChannelInboundHandlerAdapter implements VDLPeer
     public void userEventTriggered(final ChannelHandlerContext ctx, final Object evt)
             throws Exception {
         if (evt instanceof ZMTPHandshakeSuccess) {
-            peersManager.register(session.peerIdentity(), this);
+            peersManager.register(session.peerIdentity().getInt(0), this);
             try {
                 handler.connected(this);
             } catch (Exception e) {
@@ -165,7 +174,7 @@ public class ZMQPeerImpl extends ChannelInboundHandlerAdapter implements VDLPeer
 
     @Override
     public void channelInactive(final ChannelHandlerContext ctx) throws Exception {
-        peersManager.deregister(session.peerIdentity());
+        peersManager.deregister(session.peerIdentity().getInt(0));
         try {
             handler.disconnected(this);
         } catch (Exception e) {

@@ -17,11 +17,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.SecurityContext;
-import link.vida.conn.zmq.ZMQPeer;
 import link.vida.broker.PeerInfo;
-import link.vida.conn.zmq.ZMQChInit;
 import link.vida.db.vdl.VdlDao;
+import link.vida.session.VDLPeersManager;
+import link.vida.session.VDLPeer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +34,7 @@ public class WebServiceVDL {
     VdlDao vdlDao;
 
     @Inject
-    ZMQChInit zMQChInit;
+    VDLPeersManager peersManager;
     
     @Context 
     HttpServletRequest request;
@@ -47,7 +46,7 @@ public class WebServiceVDL {
     public List<PeerInfo> list() {
 
         List<PeerInfo> newList = new ArrayList<>();
-        Iterator<ZMQPeer> peersIterator = zMQChInit.getPeersManager().peers().iterator();
+        Iterator<VDLPeer> peersIterator = peersManager.peers().iterator();
         while (peersIterator.hasNext()) {
             PeerInfo peerInf = new PeerInfo();
             peerInf.setId("" + peersIterator.next().getPeerId());

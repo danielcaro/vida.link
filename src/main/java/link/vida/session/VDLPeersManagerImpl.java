@@ -7,6 +7,7 @@ package link.vida.session;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.inject.Singleton;
 import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -16,7 +17,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author dcaro
  */
-public class VDLPeersManagerImpl implements PeersManager {
+@Singleton
+public class VDLPeersManagerImpl implements VDLPeersManager {
 
     private static final Logger log = LoggerFactory.getLogger(VDLPeersManagerImpl.class);
 
@@ -55,7 +57,7 @@ public class VDLPeersManagerImpl implements PeersManager {
             log.info("Try DesRegister:" + identity);
             final ImmutableList.Builder<VDLPeer> newPeers = ImmutableList.builder();
             for (final VDLPeer peer : peers) {
-                if (!peer.session().peerIdentity().equals(identity)) {                    
+                if (!peer.getPeerId().equals(identity)) {                    
                     newPeers.add(peer);
                 }else{
                     log.info("DesRegister:" + identity);

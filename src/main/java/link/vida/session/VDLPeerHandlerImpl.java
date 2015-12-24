@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package link.vida.conn.zmq;
+package link.vida.session;
 
 import com.google.inject.Inject;
-import com.spotify.netty4.handler.codec.zmtp.ZMTPMessage;
 import link.vida.db.vdl.VdlDao;
+import link.vida.msgs.VDLMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,26 +15,26 @@ import org.slf4j.LoggerFactory;
  *
  * @author dcaro
  */
-public class ZMQPeersHandlerImpl implements ZMQPeerHandler {
+public class VDLPeerHandlerImpl implements PeerHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(ZMQPeersHandlerImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(VDLPeerHandlerImpl.class);
     
     @Inject
     VdlDao vdlDao;
 
     @Override
-    public void connected(ZMQPeer peer) {
+    public void connected(VDLPeer peer) {
         log.info("CONNECTED");
-        vdlDao.peersList();
+//        vdlDao.peersList();
     }
 
     @Override
-    public void disconnected(ZMQPeer peer) {
+    public void disconnected(VDLPeer peer) {
         log.info("DISCONNECTED");
     }
 
     @Override
-    public void message(ZMQPeer peer, ZMTPMessage message) {
+    public void message(VDLPeer peer, VDLMsg message) {
         log.info("MESSAGE");
     }
 

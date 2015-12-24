@@ -3,28 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package link.vida.conn.zmq;
+package link.vida.session;
 
-import com.spotify.netty4.handler.codec.zmtp.ZMTPMessage;
+import link.vida.msgs.VDLMsg;
 
 /**
  *
  * @author dcaro
  */
-public interface ZMQPeerHandler {
+public interface PeerHandler {
 
     /**
      * A peer connected.
      */
-    void connected(ZMQPeer peer);
+    void connected(VDLPeer peer);
 
     /**
      * A peer disconnected.
      */
-    void disconnected(ZMQPeer peer);
+    void disconnected(VDLPeer peer);
 
     /**
      * A message was received from a peer.
      */
-    void message( ZMQPeer peer, ZMTPMessage message);
+    void message(VDLPeer peer, VDLMsg message);
 }

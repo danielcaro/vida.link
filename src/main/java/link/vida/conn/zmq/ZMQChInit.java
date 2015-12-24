@@ -22,6 +22,8 @@ import java.security.SecureRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 import link.vida.app.VidaLink;
 import link.vida.db.vdl.VdlDao;
+import link.vida.session.VDLPeersManager;
+import link.vida.session.VDLPeersManagerImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,10 +39,15 @@ public class ZMQChInit extends ChannelInitializer {
 //    private static final PeersManager peersManager = new ZMQPeersManager();
 
     @Inject
-    ZMQPeersManager peersManager;
+    VDLPeersManager peersManager;
     
     @Inject
     VdlDao vdlDao;
+    
+    @Inject 
+    ZMTPIdentityGenerator zMTPIdentityGenerator;
+    
+    
     /**
      * Al iniciar un canal sucede lo siguiente.
      *
@@ -52,10 +59,15 @@ public class ZMQChInit extends ChannelInitializer {
     protected void initChannel(final Channel ch) throws Exception {
         channelGroup.add(ch);
         log.info("Nueva Conexión, total " + channelGroup.size());
+        
 
-        ZMTPCodec codec = ZMTPCodec.from(ZMTPConfig.builder().
+        ZMTPCodec codec = ZMTPCodec.from(
+                ZMTPConfig.builder().
                 socketType(ZMTPSocketType.ROUTER).
-                identityGenerator(new IdentityGenerator()).build());
+                identityGenerator(zMTPIdentityGenerator).
+                build());
+
+        // mejorar la entrega de codec
 
 //        ch.pipeline().addLast("readTimeoutHandler", new ReadTimeoutHandler(30));
         ch.pipeline().addLast("zmtp-codec", codec);
@@ -69,29 +81,9 @@ public class ZMQChInit extends ChannelInitializer {
         
     
 
-    public ZMQPeersManager getPeersManager() {
+    public VDLPeersManager getPeersManager() {
         return peersManager;
     }
 
-    /**
-     * An identity generator that keeps an integer counter per
-     * {@link ZMTPSocket}.
-     */
-    private static class IdentityGenerator implements ZMTPIdentityGenerator {
-
-        private static final Logger log = LoggerFactory.getLogger(IdentityGenerator.class);
-        private final AtomicInteger peerIdCounter = new AtomicInteger(new SecureRandom().nextInt());
-
-        @Override
-        public ByteBuffer generateIdentity(final ZMTPSession session) {
-            final ByteBuffer generated = ByteBuffer.allocate(5);
-            //generated.put((byte) 0);
-            int id = peerIdCounter.incrementAndGet();
-            log.info("GENERANDO IDENT: " + id);
-            generated.putInt(id);
-            generated.flip();
-            return generated;
-        }
-    }
 
 }

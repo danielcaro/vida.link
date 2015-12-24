@@ -21,7 +21,7 @@ public interface VDLPeer {
      * Get the VDL session for this peer.
      * @return 
      */
-    VDLSession session();
+//    VDLSession session();
     
     
     Integer getPeerId();
