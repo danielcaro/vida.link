@@ -14,30 +14,33 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import link.vida.app.VidaLink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import static link.vida.conn.zmq.ListenableFutureAdapter.listenable;
 import link.vida.msgs.VDLDecoder;
 import link.vida.msgs.VDLMsg;
 import link.vida.msgs.VDLTest;
+import link.vida.session.VDLPeer;
 
 /**
  *
  * @author dcaro
  */
-public class ZMQPeerImpl extends ChannelInboundHandlerAdapter implements ZMQPeer {
+public class ZMQPeerImpl extends ChannelInboundHandlerAdapter implements VDLPeer {
 
     private static final Logger log = LoggerFactory.getLogger(ZMQPeerImpl.class);
 
     private final Channel ch;
     private final ZMTPSession session;
-    private final Handler handler;
-    private final PeersManager peersManager;
+    private final ZMQPeerHandler handler;
+    private final ZMQPeersManager peersManager;
 
-    public ZMQPeerImpl(final Channel ch, final ZMTPSession session, PeersManager peersManager) {
+    public ZMQPeerImpl(final Channel ch, final ZMTPSession session, ZMQPeersManager peersManager) {
         this.ch = ch;
         this.session = session;
-        this.handler = new ZMQPeersHandler();
+        this.handler = new ZMQPeersHandlerImpl();
+        VidaLink.injector.injectMembers(this.handler);
         this.peersManager = peersManager;
 
         // Setear el tiemout segun el tipo de dispositivo que se conecta
@@ -127,19 +130,21 @@ public class ZMQPeerImpl extends ChannelInboundHandlerAdapter implements ZMQPeer
     public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause)
             throws Exception {
         //log.warn("exception: " + cause);
-        log.error("EXC", cause);
+        log.error("exceptionCaught"+  cause.toString());
         ctx.close();
     }
 
     @Override
-    public ZMTPSession session() {
+    public VDLSession session() {
+        // Castear sesion a otra
         return session;
     }
 
     @Override
-    public ListenableFuture<Void> send(final ZMTPMessage message) {
+    public ListenableFuture<Void> send(final VDLMsg message) {
         log.info("SEND :" + message);
         // Es necesario generar un retain
+        // crear nuevo mensaje
         ZMTPMessage newMsg = message.retain();
         final ChannelFuture f = ch.writeAndFlush(newMsg);
         return listenable(f);

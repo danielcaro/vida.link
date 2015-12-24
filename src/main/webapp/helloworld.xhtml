@@ -7,13 +7,13 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Hello World</title>        
+        <title>VDL GW</title>        
     </h:head>
 
     <h:body >
         <h:form>
-            <b:container fluid="true">
-                <b:navBar brand="Brand" brandHref="#" inverse="true">
+            <b:container fluid="false">
+                <b:navBar brand="VDL GW" brandHref="#" inverse="true">
                     <b:navbarLinks>
                         <b:navLink value="Home" href="#"></b:navLink>
                         <b:navLink value="Link" href="#"></b:navLink>
@@ -26,7 +26,7 @@
                             <b:navLink header="Nav header"></b:navLink>
                             <b:navLink value="Separated link" href="#"></b:navLink>
                             <b:navLink value="One more separated link" href="#"></b:navLink>
-                        </b:dropMenu>S
+                        </b:dropMenu>
                     </b:navbarLinks>
                 </b:navBar>
 
@@ -101,8 +101,8 @@
                         <h:outputText value="Last Name: " />
                         <p:inputText value="#{helloWorld.lastName}" />
 
-                        <p:commandButton value="Submit"
-                                         update="display" oncomplete="PF('dlg').show()" />
+                        <p:commandButton value="Submit"  update="display" oncomplete="PF('dlg').show()" />
+                        
 
                     </h:panelGrid>
                 </p:panel>
@@ -115,6 +115,8 @@
 
                     </h:panelGrid>
                 </p:dialog>
+                
+                
             </b:container>
         </h:form>
     </h:body>

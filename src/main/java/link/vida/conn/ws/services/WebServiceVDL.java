@@ -10,10 +10,14 @@ import com.google.inject.Singleton;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.SecurityContext;
 import link.vida.conn.zmq.ZMQPeer;
 import link.vida.broker.PeerInfo;
 import link.vida.conn.zmq.ZMQChInit;
@@ -29,9 +33,12 @@ public class WebServiceVDL {
 
     @Inject
     VdlDao vdlDao;
-    
+
     @Inject
     ZMQChInit zMQChInit;
+    
+    @Context 
+    HttpServletRequest request;
 
     @GET
     @Path("list")
@@ -46,12 +53,12 @@ public class WebServiceVDL {
             peerInf.setId("" + peersIterator.next().getPeerId());
             newList.add(peerInf);
         }
-
-        log.info("RETURN:" + newList.size());
+        HttpSession session = request.getSession();
+             
+        log.info("RETURN:" + newList.size() + " :" + session.getId());
         return newList;
     }
-    
-    
+
     @GET
     @Path("list_db")
     @Produces(MediaType.APPLICATION_JSON)

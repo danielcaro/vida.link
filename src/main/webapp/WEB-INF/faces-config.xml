@@ -11,6 +11,7 @@ http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
             <supported-locale>en</supported-locale>
             <supported-locale>en_US</supported-locale>
         </locale-config>
+        <!-- NECESARIO PARA PRIMEFACES CON BOOSTRAP -->
         <resource-handler>net.bootsfaces.render.UnmappedResourceHandler</resource-handler>
     </application>
 </faces-config>

@@ -5,12 +5,19 @@
  */
 package link.vida.admin.web.jsf;
 
+import com.google.inject.Inject;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import link.vida.app.VidaLink;
+import link.vida.db.vdl.VdlDao;
 
 @ManagedBean
 @SessionScoped
 public class BarcodeBean {
+
+    @Inject
+    VdlDao vdlDao;
 
     private String code39 = "1234567890128";
     private String url2 = "http://www.bootsfaces.net";
@@ -42,7 +49,7 @@ public class BarcodeBean {
     }
 
     public String getCompleteURL() {
-        return  protocol + "www." + url;
+        return protocol + "www." + url;
     }
 
     public String getUrl() {
@@ -53,8 +60,12 @@ public class BarcodeBean {
         this.url = url;
     }
 
-    
-    
-
+    /*
+    Opción para que se inicie la injección de guice desde JSF
+    */
+    @PostConstruct
+    public void init() {
+        VidaLink.injector.injectMembers(this);
+    }
 
 }

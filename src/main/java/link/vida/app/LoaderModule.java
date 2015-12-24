@@ -25,13 +25,13 @@ public class LoaderModule
         install(new ConnectorModule());
         install(new AdminConnectorModule());        
                       
-        //instalar modulos de Conexión
-//        install(new ModuleWS());
+//        instalar modulos de Conexión
+        install(new ModuleWS());
         install(new ModuleZMQ());
         
         
         // conectorres de administración
-//        install(new ModuleJSF());
+        install(new ModuleJSF());
         
         bind(ServiceManager.class).to(ServiceManagerImpl.class).asEagerSingleton();
         

@@ -5,7 +5,9 @@
  */
 package link.vida.conn.zmq;
 
+import com.google.inject.Inject;
 import com.spotify.netty4.handler.codec.zmtp.ZMTPMessage;
+import link.vida.db.vdl.VdlDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,13 +15,17 @@ import org.slf4j.LoggerFactory;
  *
  * @author dcaro
  */
-public class ZMQPeersHandler implements Handler {
+public class ZMQPeersHandlerImpl implements ZMQPeerHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(ZMQPeersHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(ZMQPeersHandlerImpl.class);
+    
+    @Inject
+    VdlDao vdlDao;
 
     @Override
     public void connected(ZMQPeer peer) {
         log.info("CONNECTED");
+        vdlDao.peersList();
     }
 
     @Override

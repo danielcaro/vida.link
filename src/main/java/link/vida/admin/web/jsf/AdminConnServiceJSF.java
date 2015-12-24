@@ -26,6 +26,7 @@ public class AdminConnServiceJSF extends Thread implements AdminConnService{
         try {
             Server server = new Server(8080);
             // http://musingsofaprogrammingaddict.blogspot.cl/2009/12/running-jsf-2-on-embedded-jetty.html
+            // http://www.javacodegeeks.com/2013/01/lightweight-web-application-primefaces-jsf-guice-mybatis-part-1.html
             
             WebAppContext wac = new AliasEnhancedWebAppContext();
             wac.setContextPath("/admin");

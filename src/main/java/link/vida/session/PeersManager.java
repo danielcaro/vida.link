@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package link.vida.conn.zmq;
+package link.vida.session;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 
 /**
@@ -14,10 +13,10 @@ import java.util.List;
  */
 public interface PeersManager {
 
-    public void register(final ByteBuffer identity, final ZMQPeerImpl peer);
+    public void register(final Integer identity, final VDLPeer peer);
 
-    public void deregister(final ByteBuffer identity);
+    public void deregister(final Integer identity);
 
-    public List<ZMQPeer> peers();
+    public List<VDLPeer> peers();
 
 }

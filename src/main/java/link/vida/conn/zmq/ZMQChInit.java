@@ -20,6 +20,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
 import java.util.concurrent.atomic.AtomicInteger;
+import link.vida.app.VidaLink;
 import link.vida.db.vdl.VdlDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,7 @@ public class ZMQChInit extends ChannelInitializer {
 //    private static final PeersManager peersManager = new ZMQPeersManager();
 
     @Inject
-    PeersManager peersManager;
+    ZMQPeersManager peersManager;
     
     @Inject
     VdlDao vdlDao;
@@ -58,14 +59,17 @@ public class ZMQChInit extends ChannelInitializer {
 
 //        ch.pipeline().addLast("readTimeoutHandler", new ReadTimeoutHandler(30));
         ch.pipeline().addLast("zmtp-codec", codec);
-        ch.pipeline().addLast("peer-handler", new ZMQPeerImpl(ch, codec.session(), peersManager));
+        ZMQPeerImpl peer = new ZMQPeerImpl(ch, codec.session(), peersManager);
+        // Injectando los miembros de ese objeto
+        VidaLink.injector.injectMembers(peer);
+        ch.pipeline().addLast("peer-handler", peer);
         
        vdlDao.peersList();
     }
         
     
 
-    public PeersManager getPeersManager() {
+    public ZMQPeersManager getPeersManager() {
         return peersManager;
     }
 

@@ -23,6 +23,12 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>prime-repo</id>
+            <name>PrimeFaces Maven Repository</name>
+            <url>http://repository.primefaces.org</url>
+            <layout>default</layout>
+        </repository>
     </repositories>
     
     <!-- NECESARIO PARA LOS HTML -->
@@ -166,9 +172,10 @@
         <dependency>
             <groupId>net.bootsfaces</groupId>
             <artifactId>bootsfaces</artifactId>
-            <version>0.7.0</version>
+            <version>0.8.0</version>
             <scope>compile</scope>
         </dependency>
+        
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
@@ -177,6 +184,11 @@
         </dependency>
         
         
+        <dependency>
+            <groupId>org.primefaces.extensions</groupId>
+            <artifactId>all-themes</artifactId>
+            <version>1.0.8</version>
+        </dependency>
         
         
         <!-- JERSEY2 , WEB SERVICE -->
@@ -255,9 +267,7 @@
         </dependency>
         
         
-        
-        
-        
+  
         
         
         <!-- WICKET -->
@@ -379,6 +389,12 @@
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-guice</artifactId>
             <version>3.7</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>1.2.4</version>
         </dependency>
         
     </dependencies>

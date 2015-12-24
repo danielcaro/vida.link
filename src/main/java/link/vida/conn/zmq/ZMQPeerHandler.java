@@ -11,7 +11,7 @@ import com.spotify.netty4.handler.codec.zmtp.ZMTPMessage;
  *
  * @author dcaro
  */
-public interface Handler {
+public interface ZMQPeerHandler {
 
     /**
      * A peer connected.

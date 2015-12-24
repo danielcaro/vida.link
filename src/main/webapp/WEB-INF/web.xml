@@ -10,8 +10,8 @@
     with Jetty8 -->
     <listener>
         <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
-         <!--with mojarra = com.sun.faces.config.ConfigureListener--> 
-         <!--https://jsflive.wordpress.com/2012/08/19/jsf-2-on-jetty-8/--> 
+        <!--with mojarra = com.sun.faces.config.ConfigureListener--> 
+        <!--https://jsflive.wordpress.com/2012/08/19/jsf-2-on-jetty-8/--> 
     </listener>
 
     <!-- File(s) appended to a request for a URL that is not mapped to a 
@@ -40,12 +40,51 @@
     <context-param>        
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
+        <!-- TODO: Problemas en los links de los recursos css y jss en Producción -->
+        <!--<param-value>Production</param-value>-->
     </context-param>
+    
+    <context-param>
+        <param-name>facelets.DEVELOPMENT</param-name>
+        <param-value>false</param-value>
+    </context-param>
+
+    
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>server</param-value>
+    </context-param>    
+    
     <context-param>        
-        <param-name>org.apache.myfaces.LOG_WEB_CONTEXT_PARAMS</param-name>
+        <param-name>org.apache.myfaces.LOG_WEB_CONTEXT_PARAMS</param-name>       
         <param-value>false</param-value>
     </context-param>
     
-
+    <context-param>
+        <param-name>org.apache.myfaces.ALLOW_JAVASCRIPT</param-name>
+        <param-value>true</param-value>
+    </context-param>
     
+    <context-param>
+        <param-name>org.apache.myfaces.DETECT_JAVASCRIPT</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>org.apache.myfaces.ERROR_HANDLING</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>org.apache.myfaces.PRETTY_HTML</param-name>
+        <param-value>false</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>bootstrap</param-value>
+    </context-param>
+        
+        
+
 </web-app>
