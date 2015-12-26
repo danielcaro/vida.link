@@ -17,7 +17,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import link.vida.broker.PeerInfo;
+import link.vida.admin.web.wicket.PeerInfo;
 import link.vida.db.vdl.VdlDao;
 import link.vida.session.VDLPeersManager;
 import link.vida.session.VDLPeer;

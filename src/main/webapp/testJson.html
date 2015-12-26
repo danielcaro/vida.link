@@ -1,0 +1,33 @@
+
+<html>
+<head>
+ <script type="text/javascript" language="javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+ <script type="text/javascript">
+            // http://coenraets.org/blog/2011/12/restful-services-with-jquery-and-java-using-jax-rs-and-jersey/
+            function sendMsg() {
+                //var bla = document.getElementById('f:detail').value;
+                //alert(bla);
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:88/vdl/list',
+                    dataType: "json",
+                    data: "",
+					xhrFields: {
+					  withCredentials: true
+				   },
+                    success: function (resp) {
+                        alert("Server SAID:\n '" + JSON.stringify(resp) + "'");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert(jqXHR.statusText);
+                        alert('Error: ' + textStatus + ' ' + errorThrown);
+                    }
+                });
+            }
+        </script>
+		
+		</head>
+		
+		<button type="button" onclick="sendMsg()">Click Me!</button>
+		
+		</html>

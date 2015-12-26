@@ -7,11 +7,26 @@ package link.vida.session;
 
 import java.security.SecureRandom;
 import java.util.concurrent.atomic.AtomicInteger;
-import link.vida.conn.zmq.ZMQChInit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Necesitamos mejorar las identificaciones de dispositivo, de las identificaciones 
+ * en las sessiones , el mensaje se envía a un dispositivo, el cual puede tener varias 
+ * sessiones abiertas, 
+ * 
+ * Las sessiones no cuenta con id  de dispositvio hasta que el login haya sido exitoso.
+ * Las sessiones sin login, se cierra después de  5 segundos.
+ * 
+ * Web Service
+ * - El id se asigna si el login es exitoso.
+ * - 
+ * 
+ * ZMQ
+ * - relación id ZMQ y id sessión VDL
+ * - 
+ * 
+ * 
  *
  * @author dcaro
  */
@@ -22,6 +37,7 @@ public class VDLIdentityGeneratorImpl implements VDLIdentityGenerator {
 
     @Override
     public Integer generateIdentity() {
+        // a que se le genera un id, y cómo se accede a este posteriormente.
         return peerIdCounter.incrementAndGet();
     }
 

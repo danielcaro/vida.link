@@ -9,7 +9,7 @@ import com.google.inject.Inject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import link.vida.broker.PeerInfo;
+import link.vida.admin.web.wicket.PeerInfo;
 import link.vida.conn.zmq.ZMQChInit;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.model.AbstractReadOnlyModel;

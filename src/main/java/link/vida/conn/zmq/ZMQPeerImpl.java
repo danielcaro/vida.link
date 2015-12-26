@@ -105,11 +105,11 @@ public class ZMQPeerImpl extends ChannelInboundHandlerAdapter implements VDLPeer
                      if (obj instanceof VDLMsg) {
                         // Repetir el mensaje a todos los equipos conectados
                         for (final VDLPeer peer : peersManager.peers()) {
-                            if (!peer.getPeerId().equals(this.getPeerId())) {
+//                            if (!peer.getPeerId().equals(this.getPeerId())) {
                                 log.info("PEER DEST " + peer.getPeerId());
                                 // transformar mensaje  de ZMQMessage to VLDMsg
                                 peer.send((VDLMsg) obj);
-                            }
+//                            }
                         }
                     }else if (obj instanceof VDLTest) {
                         log.info(((VDLTest) obj).toString());

@@ -34,7 +34,7 @@ public class LoaderModule
         
         
         // conectorres de administración
-//        install(new ModuleJSF());
+        install(new ModuleJSF());
         
         bind(ServiceManager.class).to(ServiceManagerImpl.class).asEagerSingleton();
         
