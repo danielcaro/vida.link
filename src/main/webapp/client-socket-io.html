@@ -37,9 +37,10 @@
 			output('<span class="connect-msg">Client has connected to the server!</span>');
 		});
 		
-		socket.on('chatevent', function(msg) {
-                        alert(JSON.stringify(msg));
-			output('<span class="username-msg">' + msg.data.userName + ':</span> ' + msg.data.message);
+		socket.on('chatevent', function(msg) {                        
+                        data = JSON.parse(msg.data);
+                        //alert(JSON.stringify(msg));
+			output('<span class="username-msg">' + data.userName + ':</span> ' + data.message);
 		});
 		
 		socket.on('disconnect', function() {
