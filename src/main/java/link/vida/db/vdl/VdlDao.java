@@ -7,7 +7,6 @@ package link.vida.db.vdl;
 
 import com.google.inject.Inject;
 import java.util.List;
-import link.vida.db.Migrator;
 import link.vida.db.vdl.mappers.PeersMapper;
 import link.vida.db.vdl.models.Peer;
 import org.slf4j.Logger;
@@ -19,7 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class VdlDao {
 
-    private static final Logger log = LoggerFactory.getLogger(VdlDao.class);
+    private  final Logger log = LoggerFactory.getLogger(VdlDao.class);
     @Inject
     PeersMapper peersMapper;
     

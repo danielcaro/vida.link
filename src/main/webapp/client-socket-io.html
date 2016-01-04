@@ -37,7 +37,7 @@
 			output('<span class="connect-msg">Client has connected to the server!</span>');
 		});
 		
-		socket.on('chatevent', function(msg) {                        
+		socket.on('vdlMsgData', function(msg) {                        
                         data = JSON.parse(msg.data);
                         //alert(JSON.stringify(msg));
 			output('<span class="username-msg">' + data.userName + ':</span> ' + data.message);

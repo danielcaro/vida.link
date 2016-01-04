@@ -9,7 +9,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Stage;
-import com.google.inject.servlet.GuiceServletContextListener;
 import link.vida.db.Migrator;
 import link.vida.utils.Utils;
 import org.slf4j.Logger;
@@ -52,9 +51,13 @@ public class VidaLink {
 
     public static void main(String[] args)
             throws InterruptedException, Exception {
+        
+        // TODO: Avoid multiple instances 
+        //http://www.rgagnon.com/javadetails/java-0288.html
 
         new Migrator().run();        
-        new VidaLink().startInjector();       
+        new VidaLink().startInjector(); 
+        
         Utils.showBindings(injector);
         
         ServiceManagerImpl sManager = (ServiceManagerImpl) injector.getInstance(ServiceManagerImpl.class);        

@@ -10,7 +10,6 @@ import com.spotify.netty4.handler.codec.zmtp.ZMTPIdentityGenerator;
 import com.spotify.netty4.handler.codec.zmtp.ZMTPSession;
 import java.nio.ByteBuffer;
 import link.vida.session.VDLIdentityGenerator;
-import link.vida.session.VDLIdentityGeneratorImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
