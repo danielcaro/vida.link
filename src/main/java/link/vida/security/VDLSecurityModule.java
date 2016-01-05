@@ -5,6 +5,13 @@
  */
 package link.vida.security;
 
+import com.google.inject.AbstractModule;
+import link.vida.security.cache.VDLCacheManager;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
+import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
+import org.apache.shiro.authc.pam.AuthenticationStrategy;
+import org.apache.shiro.cache.CacheManager;
+
 /**
  * Tipos de Autentificación: 
  *  - Login: email- password
@@ -27,7 +34,19 @@ package link.vida.security;
  * 
  * @author dcaro
  */
-public class VDLSecurityModule {
+public class VDLSecurityModule  extends AbstractModule {
+
+    @Override
+    protected void configure() {
+        System.setProperty("net.sf.ehcache.skipUpdateCheck", "true");        
+        
+        bind(CredentialsMatcher.class).to(VDLCredentialsMatcher.class).asEagerSingleton();
+        
+        bind(AuthenticationStrategy.class).
+                to(AtLeastOneSuccessfulStrategy.class).asEagerSingleton();
+        
+        bind(CacheManager.class).to(VDLCacheManager.class).asEagerSingleton();
+    }
     
     
     

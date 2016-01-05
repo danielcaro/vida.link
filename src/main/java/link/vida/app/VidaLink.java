@@ -31,7 +31,6 @@ public class VidaLink {
      *
      * @return
      */
-    
     protected Injector getInjector() {
         startInjector();
         return injector;
@@ -39,7 +38,7 @@ public class VidaLink {
 
     private void startInjector() {
         if (injector == null) {
-            setInjector(Guice.createInjector(Stage.PRODUCTION, new Module[]{new LoaderModule()}));            
+            setInjector(Guice.createInjector(Stage.PRODUCTION, new Module[]{new LoaderModule()}));
         }
     }
 
@@ -47,22 +46,37 @@ public class VidaLink {
         injector = injectorNew;
     }
 
-
-
     public static void main(String[] args)
             throws InterruptedException, Exception {
-        
+
+        genJKS();
         // TODO: Avoid multiple instances 
         //http://www.rgagnon.com/javadetails/java-0288.html
+        new Migrator().run();
+        new VidaLink().startInjector();
 
-        new Migrator().run();        
-        new VidaLink().startInjector(); 
-        
         Utils.showBindings(injector);
-        
-        ServiceManagerImpl sManager = (ServiceManagerImpl) injector.getInstance(ServiceManagerImpl.class);        
+
+        ServiceManagerImpl sManager = (ServiceManagerImpl) injector.getInstance(ServiceManagerImpl.class);
         sManager.start();
 
+    }
+
+    public static void genJKS() {
+        // http://www.coderanch.com/t/133048/Security/programmatically-create-keystore-import-certificate
+//        try {
+//            KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+//
+//            char[] password = "some password".toCharArray();
+//            ks.load(null, password);
+//
+//// Store away the keystore.
+//            FileOutputStream fos = new FileOutputStream("algo.jks");
+//            ks.store(fos, password);
+//            fos.close();
+//        } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException ex) {
+//            ex.printStackTrace();
+//        }
     }
 
 }

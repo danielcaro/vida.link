@@ -6,6 +6,7 @@
 package link.vida.conn.socketio;
 
 import com.corundumstudio.socketio.Configuration;
+import java.io.InputStream;
 
 /**
  *
@@ -16,6 +17,8 @@ public class VDLSocketIOConfig extends Configuration {
     public VDLSocketIOConfig() {
         setHostname("localhost");
         setPort(9090);
+//        InputStream stream = VDLSocketIOConfig.class.getResourceAsStream("algo.jks");
+//        setKeyStore(stream);
     }
 
 }
