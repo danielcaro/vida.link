@@ -389,19 +389,7 @@
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-guice</artifactId>
             <version>3.7</version>
-        </dependency>
-        
-        
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-core</artifactId>
-            <version>1.2.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-ehcache</artifactId>
-            <version>1.2.4</version>
-        </dependency>
+        </dependency>               
         
         
         <dependency>
@@ -409,5 +397,7 @@
             <artifactId>netty-socketio</artifactId>
             <version>1.7.8</version>
         </dependency>
+        
+        
     </dependencies>
 </project>

@@ -8,6 +8,7 @@ import link.vida.conn.socketio.ModuleSocketIO;
 import link.vida.conn.ws.ModuleWS;
 import link.vida.conn.zmq.ModuleZMQ;
 import link.vida.db.ConfigDB;
+import link.vida.security.SecurityModule;
 import link.vida.session.ModulePeerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,18 +25,19 @@ public class LoaderModule
         this.logger.info("Loading Modules...");
 
         install(new ConfigDB());
-        install(new ConnectorModule());
-        install(new AdminConnectorModule());    
+        
+        install(new SecurityModule());
         
         install(new ModulePeerManager());
-                      
-//        instalar modulos de Conexión
+        
+        // CONECTORES
+        install(new ConnectorModule());
         install(new ModuleWS());
         install(new ModuleZMQ());
         install(new ModuleSocketIO());
         
-        
-        // conectorres de administración
+        // ADMIN PLUGINS
+        install(new AdminConnectorModule());    
         install(new ModuleJSF());
         
         bind(ServiceManager.class).to(ServiceManagerImpl.class).asEagerSingleton();
