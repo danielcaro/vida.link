@@ -104,6 +104,9 @@ public class VDLLoginModule  implements LoginModule{
             throw new LoginException("Error: no CallbackHandler available " +
                         "to garner authentication information from the user");
 
+        // Para ingreso por consola ...
+        // ingreso web, o otros protocolos.
+        
         Callback[] callbacks = new Callback[2];
         callbacks[0] = new NameCallback("user name: ");
         callbacks[1] = new PasswordCallback("password: ", false);
@@ -144,22 +147,10 @@ public class VDLLoginModule  implements LoginModule{
         // verify the username/password
         boolean usernameCorrect = false;
         boolean passwordCorrect = false;
-        if (username.equals("testUser"))
+        if (username.equals("user"))
             usernameCorrect = true;
-        if (usernameCorrect &&
-            password.length == 12 &&
-            password[0] == 't' &&
-            password[1] == 'e' &&
-            password[2] == 's' &&
-            password[3] == 't' &&
-            password[4] == 'P' &&
-            password[5] == 'a' &&
-            password[6] == 's' &&
-            password[7] == 's' &&
-            password[8] == 'w' &&
-            password[9] == 'o' &&
-            password[10] == 'r' &&
-            password[11] == 'd') {
+        
+        if (usernameCorrect && true) { 
             // Hacer autentificación con base de datos.
             
 

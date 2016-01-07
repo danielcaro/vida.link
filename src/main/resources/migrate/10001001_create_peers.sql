@@ -9,8 +9,11 @@ ALTER TABLE peers
 ADD CONSTRAINT PK_peers 
 PRIMARY KEY (id);
 
-INSERT INTO peers(id, peer_name) VALUES(0,'XEIN-THINKPAD');
-INSERT INTO peers(id, peer_name) VALUES(1,'XEIN-RASPBERRY');
+INSERT INTO peers(id, peer_name) VALUES(0,'ADMIN');
+INSERT INTO peers(id, peer_name) VALUES(1,'MANAGER');
+
+INSERT INTO peers(id, peer_name) VALUES(2,'XEIN-THINKPAD');
+INSERT INTO peers(id, peer_name) VALUES(3,'XEIN-RASPBERRY');
 
 
 

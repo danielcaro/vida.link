@@ -10,13 +10,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PushbackInputStream;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.callback.NameCallback;
 import javax.security.auth.callback.PasswordCallback;
 import javax.security.auth.callback.TextOutputCallback;
 import javax.security.auth.callback.UnsupportedCallbackException;
+import link.vida.utils.Utils;
 
 /**
  *
@@ -139,7 +145,21 @@ public class VDLCallbackHandler implements CallbackHandler {
         System.arraycopy(buf, 0, ret, 0, offset);
         Arrays.fill(buf, ' ');
 
-        return ret;
+        byte[] passBytes = Utils.toBytes(ret);
+
+        String hashedPass = "";
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(passBytes);
+            hashedPass = new BigInteger(1, md.digest()).toString(16);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(VDLCallbackHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Arrays.fill(ret, '\u0000'); // clear sensitive data
+        Arrays.fill(passBytes, (byte) 0); // clear sensitive data
+
+        return hashedPass.toCharArray();
     }
 
 }

@@ -57,9 +57,9 @@ public class VidaLink {
         //http://www.rgagnon.com/javadetails/java-0288.html
         new Migrator().run();
         new VidaLink().startInjector();
-
+       
         testLogin();
-
+        
         Utils.showBindings(injector);
 
         ServiceManagerImpl sManager = (ServiceManagerImpl) injector.getInstance(ServiceManagerImpl.class);
