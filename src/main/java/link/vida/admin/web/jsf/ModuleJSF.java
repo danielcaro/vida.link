@@ -18,7 +18,6 @@ public class ModuleJSF extends ServletModule {
     @Override
     protected void configureServlets() {
         bind(AdminConnService.class).annotatedWith(Names.named("ADMIN.JSF")).to(AdminConnServiceJSF.class).asEagerSingleton();
-
     }
 
 }

@@ -29,14 +29,12 @@ public class AdminConnServiceJSF extends Thread implements AdminConnService{
             // http://www.javacodegeeks.com/2013/01/lightweight-web-application-primefaces-jsf-guice-mybatis-part-1.html
             
             WebAppContext wac = new AliasEnhancedWebAppContext();
-            wac.setContextPath("/admin");
+            wac.setContextPath("/");
+            
             wac.setBaseResource(
-                    new ResourceCollection(
-                            new String[] {"./src/main/webapp", "./target"}));
+                    new ResourceCollection( new String[] {"./src/main/webapp", "./target"}));
             wac.setResourceAlias("/WEB-INF/classes/", "/classes/");
             
-//            wac.addEventListener(new Listener());        
-            //wac.setInitParameter("useFileMappedBuffer", "false");
             server.setHandler(wac);
             server.setStopAtShutdown(true);
             server.start();

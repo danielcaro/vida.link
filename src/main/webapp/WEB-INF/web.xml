@@ -22,6 +22,7 @@
 
     <!-- Define the JSF servlet (manages the request processing lifecycle 
     forJavaServer) -->
+    <!-- http://stackoverflow.com/questions/21118225/primefaces-adds-xhtml-extention-to-css-and-js-files-when-rendered-so-styles-an -->
     <servlet>
         <servlet-name>faces</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -32,16 +33,21 @@
     <servlet-mapping>
         <servlet-name>faces</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
-        <url-pattern>*.jsf</url-pattern>
+        <!-- se elimina url-patter jsf, genera problemas en producción -->
         <url-pattern>/javax.faces.resource/*</url-pattern>
     </servlet-mapping>
     
     <!-- http://www.java-tutorial.ch/java-server-faces/jsf-project-stage -->
     <context-param>        
         <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Development</param-value>
+        <!--<param-value>Development</param-value>-->
         <!-- TODO: Problemas en los links de los recursos css y jss en Producción -->
-        <!--<param-value>Production</param-value>-->
+        <param-value>Production</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
+        <param-value>0</param-value>
     </context-param>
     
     <context-param>
@@ -77,7 +83,7 @@
     
     <context-param>
         <param-name>org.apache.myfaces.PRETTY_HTML</param-name>
-        <param-value>false</param-value>
+        <param-value>true</param-value>
     </context-param>
 
     <context-param>

@@ -58,7 +58,7 @@ public class VidaLink {
         new Migrator().run();
         new VidaLink().startInjector();
        
-        testLogin();
+//        testLogin();
         
         Utils.showBindings(injector);
 
