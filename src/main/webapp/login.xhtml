@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>VDL GW</title>  
+
+    </h:head>
+
+
+    <h:body >
+        <b:container>
+            <b:row>
+                <b:column span="4" offset="4" >
+                    <b:panel styleClass="login-panel" titleClass="panel-heading" titleStyle="text-align: center" collapsible="false">
+                        <f:facet name="heading">
+                            <h:graphicImage name="logo_vidalink.png" library="img"  />
+                        </f:facet>
+
+                        <fieldset>
+                            <h:form>
+                                <div class="form-group">
+                                    <b:inputText  styleClass="form-control" placeholder="Email">
+                                        <f:facet name="prepend">
+                                            <b:icon name="user" />
+                                        </f:facet>
+                                    </b:inputText>
+                                </div>
+
+                                <div class="form-group">
+                                    <b:inputText  styleClass="form-control" placeholder="Password" type="password" >
+                                        <f:facet name="prepend">
+                                            <b:iconAwesome name="key" />
+                                        </f:facet>
+                                    </b:inputText>
+                                </div>
+
+                                <div class="actions">
+                                    <b:commandButton value="Ingresar" styleClass="btn-primary btn-block" size="lg"   >  </b:commandButton>
+                                </div>
+                            </h:form>
+                        </fieldset>
+                    </b:panel>
+
+
+                </b:column >
+
+
+                <b:column span="4" offset="4" >
+                    <hr></hr>
+                    <small>
+                    <div  class="list-group">
+                        <h:link  outcome="/login.xhtml" styleClass="list-group-item"  >  
+                                <b:iconAwesome name="user-plus" />
+                                <h:outputText value=" Registrarse"/>
+                        </h:link>
+                        <h:link outcome="/index.xhtml"  styleClass="list-group-item" > 
+                                <b:iconAwesome name="envelope-o" />
+                                <h:outputText value=" Recuperar Contraseña"/>
+                        </h:link>                                
+                    </div >
+                    </small>
+                </b:column >
+
+
+
+            </b:row>
+        </b:container>
+        <f:facet name="last">
+            <h:outputStylesheet name="sb-admin-2.css" library="css" />
+            <h:outputStylesheet name="font-awesome.min.css" library="font-awesome" />
+        </f:facet>
+    </h:body>
+
+</html>
+

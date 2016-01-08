@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>VDL ADMIN</title>   
+        <h:outputStylesheet name="font-awesome.min.css" library="font-awesome" />
+    </h:head>
+
+    <h:body >        
+        <b:navBar brand="VDL" brandHref="#" inverse="true">
+            <b:navbarLinks>
+                <b:navLink value="Home" href="/"></b:navLink>
+                <b:navLink value="Admin" href="/admin/index.xhtml"></b:navLink>
+                <b:navLink value="WS" href="/admin/ws.xhtml"></b:navLink>
+                <b:navLink value="Socket IO" href="/admin/socketio.xhtml"></b:navLink>
+                <b:dropMenu value="Dropdown">
+                    <b:navLink value="Action" href="#"></b:navLink>
+                    <b:navLink value="Another action" href="#"></b:navLink>
+                    <b:navLink value="Something else here" href="#"></b:navLink>
+                    <b:navLink></b:navLink>
+                    <b:navLink header="Nav header"></b:navLink>
+                    <b:navLink value="Separated link" href="#"></b:navLink>
+                    <b:navLink value="One more separated link" href="#"></b:navLink>
+                </b:dropMenu>
+
+            </b:navbarLinks>
+            <h:form styleClass="navbar-form navbar-right">
+                <div class="form-group">
+                    <b:inputText placeholder="Email" fieldSize="xs"/>
+                    <!--input type="text" class="form-control" placeholder="Search"/-->
+                </div>
+                <div class="form-group">
+                    <b:inputText placeholder="Password" fieldSize="xs"/>
+                </div> 
+                #{' '} <!-- espacio -->
+                <b:commandButton action="a" value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
+            </h:form>
+        </b:navBar>
+
+        <b:container fluid="false">
+            <div id="content">
+                <ui:insert name="content" >
+
+                </ui:insert>
+            </div>
+        </b:container>         
+    </h:body>
+</html>

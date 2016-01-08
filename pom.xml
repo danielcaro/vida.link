@@ -172,8 +172,8 @@
         <dependency>
             <groupId>net.bootsfaces</groupId>
             <artifactId>bootsfaces</artifactId>
-            <version>0.8.0</version>
-            <scope>compile</scope>
+            <version>0.8.1-SNAPSHOT</version>
+            <scope>runtime</scope>
         </dependency>
         
         <dependency>
@@ -188,6 +188,7 @@
             <groupId>org.primefaces.extensions</groupId>
             <artifactId>all-themes</artifactId>
             <version>1.0.8</version>
+            <scope>runtime</scope>
         </dependency>
         
         
