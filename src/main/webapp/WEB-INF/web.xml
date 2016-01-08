@@ -35,6 +35,7 @@
         <url-pattern>*.xhtml</url-pattern>
         <!-- se elimina url-patter jsf, genera problemas en producción -->
         <url-pattern>/javax.faces.resource/*</url-pattern>
+        <!--http://stackoverflow.com/questions/11988415/what-is-the-jsf-resource-library-for-and-how-should-it-be-used-->
     </servlet-mapping>
     
     <!-- http://www.java-tutorial.ch/java-server-faces/jsf-project-stage -->

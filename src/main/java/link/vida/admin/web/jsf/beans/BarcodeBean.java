@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package link.vida.admin.web.jsf;
+package link.vida.admin.web.jsf.beans;
 
 import com.google.inject.Inject;
 import javax.annotation.PostConstruct;
