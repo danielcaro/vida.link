@@ -1,18 +1,12 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:h="http://java.sun.com/jsf/html" 
-      xmlns:f="http://java.sun.com/jsf/core" 
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:b="http://bootsfaces.net/ui"
-      xmlns:p="http://primefaces.org/ui">
     <ui:composition xmlns="http://www.w3.org/1999/xhtml" 
                     xmlns:h="http://java.sun.com/jsf/html" 
                     xmlns:f="http://java.sun.com/jsf/core" 
                     xmlns:ui="http://java.sun.com/jsf/facelets"
                     xmlns:b="http://bootsfaces.net/ui"
                     xmlns:p="http://primefaces.org/ui"
-                    template="/WEB-INF/templates/admin.xhtml">
+                    template="/WEB-INF/templates/default.xhtml">
 
         <ui:define name="content">
             <h:outputScript name="socket.io-1.3.7.js" library="js" target="head"/>
@@ -20,6 +14,8 @@
             <h:outputStylesheet name="console.css" library="css"  />
 
 
+            <!--http://socket.io/blog/native-socket-io-and-android/-->
+            <!--Android Socket IO--> 
             <script type="text/javascript" >
 
                 var userName = 'user' + Math.floor((Math.random() * 1000) + 1);
@@ -72,4 +68,3 @@
         </ui:define>
 
     </ui:composition>
-</html>

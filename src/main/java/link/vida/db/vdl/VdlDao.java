@@ -7,10 +7,13 @@ package link.vida.db.vdl;
 
 import com.google.inject.Inject;
 import java.util.List;
-import link.vida.db.vdl.mappers.PeersMapper;
+import link.vida.db.vdl.models.Auth;
 import link.vida.db.vdl.models.Peer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import link.vida.db.vdl.models.AuthKey;
+import link.vida.db.vdl.mappers.PeersMapper;
+import link.vida.db.vdl.mappers.AuthsMapper;
 
 /**
  *
@@ -22,6 +25,9 @@ public class VdlDao {
     @Inject
     PeersMapper peersMapper;
     
+    @Inject 
+    AuthsMapper authMapper;
+    
     
     public List<Peer> peersList(){        
         for(Peer peer: peersMapper.selectPeers()){
@@ -29,5 +35,11 @@ public class VdlDao {
         }
         return peersMapper.selectPeers();
     }
+    
+    
+    public Auth findAuth(String token, String id){
+        return authMapper.selectByPrimaryKey(new AuthKey(token, id));
+    }
+    
 
 }

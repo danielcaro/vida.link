@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="link.vida.db.vdl.mappers.AuthsMapper">
+    
+  <resultMap id="BaseResultMap" type="link.vida.db.vdl.models.Auth">
+    <id column="auth_token" jdbcType="VARCHAR" property="authToken" />
+    <id column="auth_id" jdbcType="VARCHAR" property="authId" />
+    <result column="peer_id" jdbcType="INTEGER" property="peerId" />
+    <result column="auth_key" jdbcType="VARCHAR" property="authKey" />
+    <result column="enable" jdbcType="BIT" property="enable" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    auth_token, auth_id, peer_id, auth_key, enable
+  </sql>  
+ 
+  <select id="selectByPrimaryKey" 
+          parameterType="link.vida.db.vdl.models.AuthKey" 
+          resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from auths
+    where auth_token = #{authToken,jdbcType=VARCHAR}
+      and auth_id = #{authId,jdbcType=VARCHAR} limit 1;
+  </select>
+
+</mapper>

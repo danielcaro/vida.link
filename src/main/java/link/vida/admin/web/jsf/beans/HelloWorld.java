@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package link.vida.admin.web.jsf;
+package link.vida.admin.web.jsf.beans;
 
 
 
+import link.vida.admin.web.jsf.GuiceBean;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
@@ -14,7 +15,7 @@ import javax.servlet.ServletContext;
 
 @ManagedBean
 @SessionScoped
-public class HelloWorld {
+public class HelloWorld extends GuiceBean{
 
     private String firstName = "John";
     private String lastName = "Doe";
@@ -39,7 +40,6 @@ public class HelloWorld {
     }
 
     public String showGreeting() {
-
         return "Hello !!! " + " " + firstName + " " + lastName + " !! !";
     }
 }

@@ -1,51 +1,43 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:h="http://java.sun.com/jsf/html" 
-      xmlns:f="http://java.sun.com/jsf/core" 
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:b="http://bootsfaces.net/ui"
-      xmlns:p="http://primefaces.org/ui">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html" 
+                xmlns:f="http://java.sun.com/jsf/core" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/default.xhtml">
 
-    <ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-                    xmlns:h="http://java.sun.com/jsf/html" 
-                    xmlns:f="http://java.sun.com/jsf/core" 
-                    xmlns:ui="http://java.sun.com/jsf/facelets"
-                    xmlns:b="http://bootsfaces.net/ui"
-                    xmlns:p="http://primefaces.org/ui"
-                    template="/WEB-INF/templates/admin.xhtml">
-
-        <ui:define name="content">
-            <script type="text/javascript">
-                // http://coenraets.org/blog/2011/12/restful-services-with-jquery-and-java-using-jax-rs-and-jersey/
-                function sendMsg() {
-                    //var bla = document.getElementById('f:detail').value;
-                    //alert(bla);
-                    $.ajax({
-                        type: 'GET',
-                        url: 'http://localhost:88/vdl/list',
-                        dataType: "json",
-                        data: "",
-                        xhrFields: {
-                            withCredentials: true
-                        },
-                        success: function (resp) {
-                            alert("Server SAID:\n '" + JSON.stringify(resp) + "'");
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            alert(jqXHR.statusText);
-                            alert('Error: ' + textStatus + ' ' + errorThrown);
-                        }
-                    });
-                }
+    <ui:define name="content">
+        <script type="text/javascript">
+            // http://coenraets.org/blog/2011/12/restful-services-with-jquery-and-java-using-jax-rs-and-jersey/
+            function sendMsg() {
+                //var bla = document.getElementById('f:detail').value;
+                //alert(bla);
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:88/vdl/list',
+                    dataType: "json",
+                    data: "",
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: function (resp) {
+                        alert("Server SAID:\n '" + JSON.stringify(resp) + "'");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert(jqXHR.statusText);
+                        alert('Error: ' + textStatus + ' ' + errorThrown);
+                    }
+                });
+            }
 
 
-            </script>
+        </script>
 
 
-            <p:inputText id="detail" value="" required="true" disabled="true" />
-            <p:commandButton value="Send" onclick="sendMsg()"/>
-        </ui:define>
-    </ui:composition>
-</html>
+        <p:inputText id="detail" value="" required="true" disabled="true" />
+        <p:commandButton value="Send" onclick="sendMsg()"/>
+    </ui:define>
+</ui:composition>
 

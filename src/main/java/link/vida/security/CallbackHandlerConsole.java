@@ -28,7 +28,7 @@ import link.vida.utils.Utils;
  *
  * @author dcaro
  */
-public class VDLCallbackHandler implements CallbackHandler {
+public class CallbackHandlerConsole implements CallbackHandler {
 
     /**
      * Invoke an array of Callbacks.
@@ -153,7 +153,7 @@ public class VDLCallbackHandler implements CallbackHandler {
             md.update(passBytes);
             hashedPass = new BigInteger(1, md.digest()).toString(16);
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(VDLCallbackHandler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CallbackHandlerConsole.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         Arrays.fill(ret, '\u0000'); // clear sensitive data

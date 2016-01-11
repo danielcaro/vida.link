@@ -1,125 +1,97 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:h="http://java.sun.com/jsf/html" 
-      xmlns:f="http://java.sun.com/jsf/core" 
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:b="http://bootsfaces.net/ui"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>VDL GW</title>        
-    </h:head>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html" 
+                xmlns:f="http://java.sun.com/jsf/core" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/default.xhtml">
 
-    <h:body >
-        <h:form>
-            <b:container fluid="false">
-                <b:navBar brand="VDL" brandHref="#" inverse="true">
-                    <b:navbarLinks>
-                        <b:navLink value="Home" href="/"></b:navLink>
-                        <b:navLink value="Admin" href="/admin/index.xhtml"></b:navLink>
-                        <b:navLink value="WS" href="/admin/ws.xhtml"></b:navLink>
-                        <b:navLink value="Socket IO" href="/admin/socketio.xhtml"></b:navLink>
-                        <b:dropMenu value="Dropdown">
-                            <b:navLink value="Action" href="#"></b:navLink>
-                            <b:navLink value="Another action" href="#"></b:navLink>
-                            <b:navLink value="Something else here" href="#"></b:navLink>
-                            <b:navLink></b:navLink>
-                            <b:navLink header="Nav header"></b:navLink>
-                            <b:navLink value="Separated link" href="#"></b:navLink>
-                            <b:navLink value="One more separated link" href="#"></b:navLink>
-                        </b:dropMenu>
-                    </b:navbarLinks>
-                </b:navBar>
+    <ui:define name="content">
+        <b:well>
+            <b:container>
+                <b:panelGrid  colSpans="8,4">
+                    <b:inputText label="Enter a number" fieldSize="sm" value="#{barcodeBean.code39}">
+                        <f:facet name="prepend">
+                            <h:outputText value="Code39" />
+                        </f:facet>
+                        <p:ajax event="keyup" update="code39" />
+                    </b:inputText>
+                    <p:barcode value="#{barcodeBean.code39}" type="code39" id="code39"/>
 
-                <b:well>
+                    <b:inputText label="Enter your internet address" fieldSize="sm" value="#{barcodeBean.url2}">
+                        <p:ajax event="keyup" update="@next" />
+                    </b:inputText>
+                    <p:barcode value="#{barcodeBean.url2}" type="qr" id="qr1" />
 
-                    <p:growl id="msgs1" showDetail="true" />
-                    <b:container>
-                        <b:panelGrid  colSpans="8,4">
-                            <b:inputText label="Enter a number" fieldSize="sm" value="#{barcodeBean.code39}">
-                                <f:facet name="prepend">
-                                    <h:outputText value="Code39" />
-                                </f:facet>
-                                <p:ajax event="keyup" update="code39" />
-                            </b:inputText>
-                            <p:barcode value="#{barcodeBean.code39}" type="code39" id="code39"/>
-
-                            <b:inputText label="Enter your internet address" fieldSize="sm" value="#{barcodeBean.url2}">
-                                <p:ajax event="keyup" update="@next" />
-                            </b:inputText>
-                            <p:barcode value="#{barcodeBean.url2}" type="qr" id="qr1" />
-
-                        </b:panelGrid>
-                    </b:container>
-                </b:well>
-
-                <p:panelGrid columns="2">
-                    <h:outputText value="Interleaved 2 of 5" />
-                    <p:barcode value="0123456789" type="int2of5" />
-
-                    <h:outputText value="Codabar" />
-                    <p:barcode value="0123456789" type="codabar"/>
-
-                    <h:outputText value="Code39" />
-                    <p:barcode value="0123456789" type="code39" />
-
-                    <h:outputText value="Code128" />
-                    <p:barcode value="0123456789" type="code128"/>
-
-                    <h:outputText value="EAN-8" />
-                    <p:barcode value="20123451" type="ean8"/>
-
-                    <h:outputText value="EAN-13" />
-                    <p:barcode value="0123456789012" type="ean13"/>
-
-                    <h:outputText value="UPC-A (PNG)" />
-                    <p:barcode value="01234567895" type="upca" format="png"/>
-
-                    <h:outputText value="UPC-E (Vertical)" />
-                    <p:barcode value="01234133" type="upce" orientation="90"/>
-
-                    <h:outputText value="PDF417" />
-                    <p:barcode value="0123456789" type="pdf417"/>
-
-                    <h:outputText value="DataMatrix" />
-                    <p:barcode value="0123456789" type="datamatrix"/>
-
-                    <h:outputText value="Postnet" />
-                    <p:barcode value="0123456789" type="postnet"/>
-
-                    <h:outputText value="QR" />
-                    <p:barcode value="0123456789" type="qr"/>
-                </p:panelGrid>
-
-
-                <p:growl id="messages"/>
-
-                <p:panel header="Hello World">
-                    <h:panelGrid columns="2" cellpadding="4">
-                        <h:outputText value="First Name: " />
-                        <p:inputText value="#{helloWorld.firstName}" />
-
-                        <h:outputText value="Last Name: " />
-                        <p:inputText value="#{helloWorld.lastName}" />
-
-                        <p:commandButton value="Submit"  update="display" oncomplete="PF('dlg').show()" />
-                        
-
-                    </h:panelGrid>
-                </p:panel>
-
-                <p:dialog header="Greeting" widgetVar="dlg" modal="true"
-                          resizable="false">
-                    <h:panelGrid id="display" columns="1"
-                                 cellpadding="4">
-                        <h:outputText value="#{helloWorld.showGreeting()}" />
-
-                    </h:panelGrid>
-                </p:dialog>
-                
-                
+                </b:panelGrid>
             </b:container>
-        </h:form>
-    </h:body>
-</html>
+        </b:well>
 
+        <p:panelGrid columns="2">
+            <h:outputText value="Interleaved 2 of 5" />
+            <p:barcode value="0123456789" type="int2of5" />
+
+            <h:outputText value="Codabar" />
+            <p:barcode value="0123456789" type="codabar"/>
+
+            <h:outputText value="Code39" />
+            <p:barcode value="0123456789" type="code39" />
+
+            <h:outputText value="Code128" />
+            <p:barcode value="0123456789" type="code128"/>
+
+            <h:outputText value="EAN-8" />
+            <p:barcode value="20123451" type="ean8"/>
+
+            <h:outputText value="EAN-13" />
+            <p:barcode value="0123456789012" type="ean13"/>
+
+            <h:outputText value="UPC-A (PNG)" />
+            <p:barcode value="01234567895" type="upca" format="png"/>
+
+            <h:outputText value="UPC-E (Vertical)" />
+            <p:barcode value="01234133" type="upce" orientation="90"/>
+
+            <h:outputText value="PDF417" />
+            <p:barcode value="0123456789" type="pdf417"/>
+
+            <h:outputText value="DataMatrix" />
+            <p:barcode value="0123456789" type="datamatrix"/>
+
+            <h:outputText value="Postnet" />
+            <p:barcode value="0123456789" type="postnet"/>
+
+            <h:outputText value="QR" />
+            <p:barcode value="0123456789" type="qr"/>
+        </p:panelGrid>
+
+
+
+
+        <p:panel header="Hello World">
+            <h:panelGrid columns="2" cellpadding="4">
+                <h:outputText value="First Name: " />
+                <p:inputText value="#{helloWorld.firstName}" />
+
+                <h:outputText value="Last Name: " />
+                <p:inputText value="#{helloWorld.lastName}" />
+
+                <p:commandButton value="Submit"  update="display" oncomplete="PF('dlg').show()" />
+
+
+            </h:panelGrid>
+        </p:panel>
+
+        <p:dialog header="Greeting" widgetVar="dlg" modal="true"
+                  resizable="false">
+            <h:panelGrid id="display" columns="1"
+                         cellpadding="4">
+                <h:outputText value="#{helloWorld.showGreeting()}" />
+
+            </h:panelGrid>
+        </p:dialog>
+    </ui:define>  
+
+</ui:composition>

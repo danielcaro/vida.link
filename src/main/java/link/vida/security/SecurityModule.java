@@ -8,6 +8,18 @@ package link.vida.security;
 import com.google.inject.AbstractModule;
 
 /**
+ * JAAS
+ * http://docs.oracle.com/javase/8/docs/technotes/guides/security/jaas/JAASRefGuide.html#CallbackHandler
+ * http://docs.oracle.com/javase/8/docs/api/javax/security/auth/callback/CallbackHandler.html
+ * http://docs.oracle.com/javase/8/docs/api/javax/security/auth/login/LoginContext.html
+ * http://docs.oracle.com/javase/8/docs/technotes/guides/security/jaas/tutorials/GeneralAcnOnly.html#SampleAcn
+ * http://docs.oracle.com/javase/8/docs/technotes/guides/security/jaas/JAASLMDevGuide.html
+ * 
+ * 
+ * http://www.journaldev.com/7252/jsf-authentication-login-logout-database-example
+ * https://www.owasp.org/index.php/Hashing_Java
+ * http://www.mindrot.org/projects/jBCrypt/
+ * 
  * Tipos de Autentificación: 
  *  - Login: email- password
  *  - MAC: mac address y key

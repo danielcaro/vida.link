@@ -13,7 +13,8 @@ import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 import link.vida.db.Migrator;
 import link.vida.security.VDLAuthConfiguration;
-import link.vida.security.VDLCallbackHandler;
+import link.vida.security.CallbackHandlerConsole;
+import link.vida.security.CallbackHandlerVDL;
 import link.vida.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,7 +76,7 @@ public class VidaLink {
         // file and to also use the specified CallbackHandler.
         LoginContext lc = null;
         try {
-            lc = new LoginContext(VDLAuthConfiguration.APP_NAME, new VDLCallbackHandler());
+            lc = new LoginContext(VDLAuthConfiguration.APP_NAME, new CallbackHandlerVDL("email","user","pass"));
         } catch (LoginException le) {
             System.err.println("Cannot create LoginContext (LoginException). "
                     + le.getMessage());

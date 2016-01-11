@@ -32,9 +32,9 @@ public class LoaderModule
         
         // CONECTORES
         install(new ConnectorModule());
-        install(new ModuleWS());
-        install(new ModuleZMQ());
-        install(new ModuleSocketIO());
+//        install(new ModuleWS());
+//        install(new ModuleZMQ());
+//        install(new ModuleSocketIO());
         
         // ADMIN PLUGINS
         install(new AdminConnectorModule());    
