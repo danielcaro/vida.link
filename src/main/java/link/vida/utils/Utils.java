@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.logging.Level;
-import link.vida.app.VidaLink;
 import link.vida.security.CallbackHandlerConsole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

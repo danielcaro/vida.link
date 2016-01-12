@@ -19,5 +19,7 @@ public interface ConnectorManager {
     public ConnService getConnServiceById(Short connId);
 
     public HashMap<Short, ConnService> getConnServices();
+    
+    public HashMap<ConnService,String> status();
 
 }

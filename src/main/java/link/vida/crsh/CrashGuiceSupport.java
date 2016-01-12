@@ -4,12 +4,10 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Map;
 
-import org.crsh.plugin.CRaSHPlugin;
 import org.crsh.plugin.PluginContext;
 import org.crsh.plugin.PluginDiscovery;
 import org.crsh.plugin.PluginLifeCycle;
 import org.crsh.plugin.PropertyDescriptor;
-import org.crsh.plugin.ServiceLoaderDiscovery;
 import org.crsh.vfs.FS;
 import org.crsh.vfs.Path;
 
@@ -18,8 +16,6 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Provides;
-import com.google.inject.TypeLiteral;
-import com.google.inject.multibindings.Multibinder;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 import org.crsh.auth.AuthenticationPlugin;

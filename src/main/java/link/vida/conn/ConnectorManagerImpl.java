@@ -95,4 +95,9 @@ public class ConnectorManagerImpl implements ConnectorManager {
             conn.stop();
         }
     }
+
+    @Override
+    public HashMap<ConnService, String> status() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

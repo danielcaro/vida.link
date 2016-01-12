@@ -8,9 +8,12 @@ package link.vida.crsh;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
+import link.vida.utils.Utils;
 import org.crsh.plugin.CRaSHPlugin;
 import org.crsh.plugin.PluginDiscovery;
 import org.crsh.plugin.ServiceLoaderDiscovery;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -18,18 +21,22 @@ import org.crsh.plugin.ServiceLoaderDiscovery;
  */
 public class CrashPluginsModule extends AbstractModule {
 
+    private static final Logger log = LoggerFactory.getLogger(CrashPluginsModule.class);
+
     @Override
     protected void configure() {
         ClassLoader loader = getClass().getClassLoader();
         PluginDiscovery discovery = new ServiceLoaderDiscovery(loader);
 
-        Multibinder<CRaSHPlugin<?>> pluginBinder = Multibinder.newSetBinder(binder(), new TypeLiteral<CRaSHPlugin<?>>() {
-        });
+        Multibinder<CRaSHPlugin<?>> pluginBinder
+                = Multibinder.newSetBinder(binder(), 
+                        new TypeLiteral<CRaSHPlugin<?>>() {});
 
         Iterable<CRaSHPlugin<?>> plugins = discovery.getPlugins();
         bind(PluginDiscovery.class).to(GuicePluginDiscovery.class);
         for (CRaSHPlugin<?> plugin : plugins) {
             pluginBinder.addBinding().toInstance(plugin);
+            log.info("BINDING:" + plugin.getClass().getCanonicalName());
             bind((Class<CRaSHPlugin>) plugin.getClass()).toInstance(plugin);
         }
     }
