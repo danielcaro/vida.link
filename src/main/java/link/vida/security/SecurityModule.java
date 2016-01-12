@@ -37,6 +37,9 @@ import com.google.inject.AbstractModule;
  * puede determinar los permiso del resto de dispositivos.
  * 
  * Cáda administrador, puede crear roles y asignarle nombres que el determine.
+ *  - 
+ * 
+ * 
  * 
  * 
  * @author dcaro

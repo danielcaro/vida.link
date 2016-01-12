@@ -7,6 +7,7 @@ import link.vida.conn.ConnectorModule;
 import link.vida.conn.socketio.ModuleSocketIO;
 import link.vida.conn.ws.ModuleWS;
 import link.vida.conn.zmq.ModuleZMQ;
+import link.vida.crsh.CrashGuiceSupport;
 import link.vida.db.ConfigDB;
 import link.vida.security.SecurityModule;
 import link.vida.session.ModulePeerManager;
@@ -24,24 +25,28 @@ public class LoaderModule
         this.logger.info("Free Memory / Total Memory:" + Runtime.getRuntime().freeMemory() + " / " + Runtime.getRuntime().maxMemory());
         this.logger.info("Loading Modules...");
 
+        install(new CrashGuiceSupport()); //import crash in my app
+
         install(new ConfigDB());
-        
+
         install(new SecurityModule());
-        
+
         install(new ModulePeerManager());
-        
+
         // CONECTORES
         install(new ConnectorModule());
-//        install(new ModuleWS());
-//        install(new ModuleZMQ());
-//        install(new ModuleSocketIO());
-        
+        install(new ModuleWS());
+        install(new ModuleZMQ());
+        install(new ModuleSocketIO());
+
         // ADMIN PLUGINS
-        install(new AdminConnectorModule());    
+        install(new AdminConnectorModule());
         install(new ModuleJSF());
-        
+
         bind(ServiceManager.class).to(ServiceManagerImpl.class).asEagerSingleton();
-        
+
         this.logger.info("Modules Loaded");
     }
+
+
 }

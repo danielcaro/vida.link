@@ -408,6 +408,20 @@
             <artifactId>jBCrypt</artifactId>
             <version>0.4</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.crsh</groupId>
+            <artifactId>crsh.shell.core</artifactId>
+            <version>1.3.0-beta2</version>
+        </dependency>
+
+       
+        <dependency>
+            <groupId>org.crsh</groupId>
+            <artifactId>crsh.shell.ssh</artifactId>
+            <version>1.3.0-beta2</version>
+        </dependency>
+          
 
     </dependencies>
 </project>
