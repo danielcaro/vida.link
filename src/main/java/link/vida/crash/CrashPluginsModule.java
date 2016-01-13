@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package link.vida.crsh;
+package link.vida.crash;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
-import link.vida.utils.Utils;
 import org.crsh.plugin.CRaSHPlugin;
 import org.crsh.plugin.PluginDiscovery;
 import org.crsh.plugin.ServiceLoaderDiscovery;
@@ -36,7 +35,7 @@ public class CrashPluginsModule extends AbstractModule {
         bind(PluginDiscovery.class).to(GuicePluginDiscovery.class);
         for (CRaSHPlugin<?> plugin : plugins) {
             pluginBinder.addBinding().toInstance(plugin);
-            log.info("BINDING:" + plugin.getClass().getCanonicalName());
+            log.info("Binding CRaSHPlugin [" + plugin.getClass().getSimpleName() + "]");
             bind((Class<CRaSHPlugin>) plugin.getClass()).toInstance(plugin);
         }
     }

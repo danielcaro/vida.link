@@ -1,4 +1,4 @@
-package link.vida.crsh;
+package link.vida.crash;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -115,9 +115,7 @@ public class CrashGuiceSupport extends AbstractModule {
         
         return CrashGuiceConfiguration.builder()
                 .property(SSHPlugin.SSH_PORT.getName(), 22)
-                .property(AuthenticationPlugin.AUTH.getName(), "simple")
-                .property(SimpleAuthenticationPlugin.SIMPLE_USERNAME.name, "admin")
-                .property(SimpleAuthenticationPlugin.SIMPLE_PASSWORD.name, "password")
+                .property(AuthenticationPlugin.AUTH.getName(), "vida.link.crash")
                 .build();
     }
 

@@ -44,7 +44,7 @@ public class LoginBean extends GuiceBean {
         // Get every user from our sample database :)
         try {
             LoginContext lc = new LoginContext(VDLAuthConfiguration.APP_NAME,
-                    new CallbackHandlerVDL("login", username, password));
+                    new CallbackHandlerVDL("email", username, password));
             lc.login();
             loggedIn = true;
             return navigationBean.redirectToWelcome();

@@ -15,11 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO: 
- * - Add functions to start and stop each service
- * - If connector is enable on Database, enable it.
- * - Improve connector status.
- * - getConnector By ConnName
+ * TODO: - Add functions to start and stop each service - If connector is enable
+ * on Database, enable it. - Improve connector status. - getConnector By
+ * ConnName
+ *
  * @author daniel
  */
 public class ConnectorManagerImpl implements ConnectorManager {
@@ -27,10 +26,9 @@ public class ConnectorManagerImpl implements ConnectorManager {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
     private HashMap<Short, ConnService> connServices = null;
     private Injector injector;
-    
+
 //    @Inject(optional=true)
 //    private ConnectorDao connectorDao;
-
     @Inject
     public void setInjector(Injector injector) {
         this.injector = injector;
@@ -43,7 +41,7 @@ public class ConnectorManagerImpl implements ConnectorManager {
             if (entry.getKey().getTypeLiteral().getType().toString().contains("interface")) {
                 String[] inter = entry.getKey().getTypeLiteral().getType().toString().split(" ");
                 if (inter[1].equals(ConnService.class.getCanonicalName())) {
-                    
+
                     ConnService conn = (ConnService) injector.getInstance(entry.getKey());
                     //TODO: Avisar que el connector está activo
                     conn.setConnectorId(id);
@@ -54,11 +52,9 @@ public class ConnectorManagerImpl implements ConnectorManager {
             }
         }
     }
-    
-    
-    
+
     @Override
-    public ConnService getConnServiceById(Short connId){
+    public ConnService getConnServiceById(Short connId) {
         return getConnServices().get(connId);
     }
 
@@ -68,7 +64,7 @@ public class ConnectorManagerImpl implements ConnectorManager {
             attachConnServices();
         }
         return connServices;
-    }       
+    }
 
     @Override
     public void startConnServices() {
@@ -79,9 +75,9 @@ public class ConnectorManagerImpl implements ConnectorManager {
             // - sino está se agrega en modo desactivado
             // - si es está en DB y es activo proceder a levantar connector            
             ConnService conn = getConnServices().get(connNames.next());
-            logger.info("STARTING CONNECTOR (" + conn.getConnName() + ")");                
-            conn.start();            
-            logger.info("CONNECTOR STARTED (" + conn.getConnName() + ")"); 
+            logger.info("STARTING CONNECTOR (" + conn.getConnName() + ")");
+            conn.start();
+            logger.info("CONNECTOR STARTED (" + conn.getConnName() + ")");
         }
     }
 
@@ -91,13 +87,14 @@ public class ConnectorManagerImpl implements ConnectorManager {
         Iterator<Short> connNames = getConnServices().keySet().iterator();
         while (connNames.hasNext()) {
             ConnService conn = getConnServices().get(connNames.next());
-            logger.info("STOPING CONNECTOR (" + conn.getConnName() + ")");    
+            logger.info("STOPING CONNECTOR (" + conn.getConnName() + ")");
             conn.stop();
         }
     }
 
     @Override
     public HashMap<ConnService, String> status() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        logger.info("STATUS REQ CONN N°: " + getConnServices().size());
+        return null;
     }
 }

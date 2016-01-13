@@ -1,5 +1,5 @@
 
-package link.vida.crsh;
+package link.vida.crash;
 
 import java.util.Collection;
 import java.util.Map.Entry;

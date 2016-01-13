@@ -1,4 +1,4 @@
-package link.vida.crsh;
+package link.vida.crash;
 
 import java.util.Iterator;
 
