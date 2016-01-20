@@ -30,6 +30,8 @@ public class LoaderModule
 
         install(new SecurityModule());
         
+        // cambiar nombre a console .
+        install(new CrashGuiceSupport()); //import crash in my app
         
 
         install(new ModulePeerManager());
@@ -44,8 +46,7 @@ public class LoaderModule
         install(new AdminConnectorModule());
         install(new ModuleJSF());
         
-        // cambiar nombre a console .
-        install(new CrashGuiceSupport()); //import crash in my app
+
 
         bind(ServiceManager.class).to(ServiceManagerImpl.class).asEagerSingleton();
 

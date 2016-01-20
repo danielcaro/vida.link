@@ -25,7 +25,9 @@ public class ServiceManagerImpl implements ServiceManager {
 
     @Override
     public void start() {
-        connectorManager.startConnServices();
+        // Plugins de Conectores 
+        connectorManager.startConnectors();
+        // Plugins Administrativos 
         adminConnectorManager.startAdminConnServices();
     }
 

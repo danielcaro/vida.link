@@ -11,6 +11,7 @@ import com.google.inject.Key;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,82 +20,76 @@ import org.slf4j.LoggerFactory;
  * on Database, enable it. - Improve connector status. - getConnector By
  * ConnName
  *
+ *
+ * UNINSTALLED INSTALLED RESOLVED STARTING STOPPING ACTIVE
+ *
+ * - Se buscan
+ *
+ *
+ *
  * @author daniel
  */
 public class ConnectorManagerImpl implements ConnectorManager {
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private HashMap<Short, ConnService> connServices = null;
+    private HashMap<Integer, Connector> connServices = null;
     private Injector injector;
 
-//    @Inject(optional=true)
-//    private ConnectorDao connectorDao;
+    @Inject
+    Set<Connector> connectors;
+
     @Inject
     public void setInjector(Injector injector) {
         this.injector = injector;
     }
 
     private void attachConnServices() {
-        connServices = new HashMap<Short, ConnService>();
+        connServices = new HashMap<>();
         int id = 0;
-        for (Map.Entry<Key<?>, Binding<?>> entry : injector.getBindings().entrySet()) {
-            if (entry.getKey().getTypeLiteral().getType().toString().contains("interface")) {
-                String[] inter = entry.getKey().getTypeLiteral().getType().toString().split(" ");
-                if (inter[1].equals(ConnService.class.getCanonicalName())) {
-
-                    ConnService conn = (ConnService) injector.getInstance(entry.getKey());
-                    //TODO: Avisar que el connector está activo
-                    conn.setConnectorId(id);
-                    logger.info("PUT[" + conn.getConnectorId() + "]" + conn.getConnName());
-                    connServices.put(conn.getConnectorId().shortValue(), conn);
-                    id = id + 1;
-                }
-            }
+        for (Connector connector : connectors) {
+            logger.info("ADDED " + connector.getConnectorName());
+            connServices.put(id, connector);
+            id = id + 1;
         }
+
+    }
+
+
+    @Override
+    public Connector getConnectorById(Integer connId) {
+        return getConnectors().get(connId);
     }
 
     @Override
-    public ConnService getConnServiceById(Short connId) {
-        return getConnServices().get(connId);
-    }
-
-    @Override
-    public HashMap<Short, ConnService> getConnServices() {
-        if (connServices == null) {
-            attachConnServices();
-        }
+    public HashMap<Integer, Connector> getConnectors() {
+        if (connServices == null) { attachConnServices();}
         return connServices;
     }
 
     @Override
-    public void startConnServices() {
+    public void startConnectors() {
         logger.info("Iniciando Conectores");
-        Iterator<Short> connNames = getConnServices().keySet().iterator();
+        Iterator<Integer> connNames = getConnectors().keySet().iterator();
         while (connNames.hasNext()) {
             // - revisar si está en la base de datos.        
             // - sino está se agrega en modo desactivado
             // - si es está en DB y es activo proceder a levantar connector            
-            ConnService conn = getConnServices().get(connNames.next());
-            logger.info("STARTING CONNECTOR (" + conn.getConnName() + ")");
+            Connector conn = getConnectors().get(connNames.next());
+            logger.info("STARTING CONNECTOR (" + conn.getConnectorName() + ")");
             conn.start();
-            logger.info("CONNECTOR STARTED (" + conn.getConnName() + ")");
+            logger.info("CONNECTOR STARTED (" + conn.getConnectorName() + ")");
         }
     }
 
     @Override
-    public void stopConnServices() {
+    public void stopConnectors() {
         logger.info("Cerrando Conectores");
-        Iterator<Short> connNames = getConnServices().keySet().iterator();
+        Iterator<Integer> connNames = getConnectors().keySet().iterator();
         while (connNames.hasNext()) {
-            ConnService conn = getConnServices().get(connNames.next());
-            logger.info("STOPING CONNECTOR (" + conn.getConnName() + ")");
+            Connector conn = getConnectors().get(connNames.next());
+            logger.info("STOPING CONNECTOR (" + conn.getConnectorName() + ")");
             conn.stop();
         }
     }
 
-    @Override
-    public HashMap<ConnService, String> status() {
-        logger.info("STATUS REQ CONN N°: " + getConnServices().size());
-        return null;
-    }
 }

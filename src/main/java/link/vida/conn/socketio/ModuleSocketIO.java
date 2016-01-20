@@ -7,11 +7,11 @@ package link.vida.conn.socketio;
 
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOServer;
-import com.google.inject.name.Names;
+import com.google.inject.multibindings.Multibinder;
 import com.google.inject.servlet.ServletModule;
-import link.vida.conn.ConnService;
 import link.vida.conn.socketio.listeners.VDLMsgDataListenerImpl;
 import link.vida.conn.socketio.listeners.VDLMsgDataListener;
+import link.vida.conn.Connector;
 
 /**
  *
@@ -21,8 +21,9 @@ public class ModuleSocketIO extends ServletModule {
 
     @Override
     protected void configureServlets() {
-        bind(ConnService.class).annotatedWith(Names.named("CONN.SOCKET-IO")).to(ConnSocketIO.class).asEagerSingleton();
-        
+        Multibinder<Connector> uriBinder = Multibinder.newSetBinder(binder(), Connector.class);
+        uriBinder.addBinding().to(ConnSocketIO.class);
+
         bind(Configuration.class).to(VDLSocketIOConfig.class).asEagerSingleton();
         bind(SocketIOServer.class).to(VDLSocketServerIO.class).asEagerSingleton();
         bind(VDLMsgDataListener.class).to(VDLMsgDataListenerImpl.class).asEagerSingleton();

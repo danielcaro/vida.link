@@ -19,7 +19,6 @@ import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 import org.crsh.auth.AuthenticationPlugin;
-import org.crsh.auth.SimpleAuthenticationPlugin;
 import org.crsh.ssh.SSHPlugin;
 
 public class CrashGuiceSupport extends AbstractModule {
@@ -114,7 +113,7 @@ public class CrashGuiceSupport extends AbstractModule {
         // https://thedet.wordpress.com/2011/01/23/guice-2-0-multibinder-java-serviceloader-plugin-mechanism/
         
         return CrashGuiceConfiguration.builder()
-                .property(SSHPlugin.SSH_PORT.getName(), 22)
+                .property(SSHPlugin.SSH_PORT.getName(), 2222)
                 .property(AuthenticationPlugin.AUTH.getName(), "vida.link.crash")
                 .build();
     }

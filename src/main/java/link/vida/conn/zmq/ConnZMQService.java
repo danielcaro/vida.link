@@ -16,21 +16,19 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import link.vida.conn.ConnService;
+import link.vida.conn.Connector;
 
 /**
  *
  * @author dcaro
  */
 @Singleton
-public class ConnZMQService extends Thread  implements ConnService{
+public class ConnZMQService extends Thread implements Connector {
 
     static final int PORT = Integer.parseInt(System.getProperty("port", "777"));
-    private Integer connectorId;
-    
+
     @Inject
     ZMQChInit zMQChInit;
-
 
     @Override
     public void run() {
@@ -61,23 +59,10 @@ public class ConnZMQService extends Thread  implements ConnService{
             }
         }
     }
-    
-    
 
     @Override
-    public String getConnName() {
+    public String getConnectorName() {
         return "CONN.ZMQ";
     }
-
-    @Override
-    public Integer getConnectorId() {
-        return connectorId;
-    }
-
-    @Override
-    public void setConnectorId(Integer connectorId) {
-        this.connectorId = connectorId;
-    }
-
 
 }

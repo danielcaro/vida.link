@@ -35,7 +35,7 @@ public class CrashPluginsModule extends AbstractModule {
         bind(PluginDiscovery.class).to(GuicePluginDiscovery.class);
         for (CRaSHPlugin<?> plugin : plugins) {
             pluginBinder.addBinding().toInstance(plugin);
-            log.info("Binding CRaSHPlugin [" + plugin.getClass().getSimpleName() + "]");
+            log.info("Binding CRaSHPlugin [" + plugin.getClass().getSimpleName() + "]"+ plugin.getType() );
             bind((Class<CRaSHPlugin>) plugin.getClass()).toInstance(plugin);
         }
     }

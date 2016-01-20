@@ -12,14 +12,13 @@ import java.util.HashMap;
  */
 public interface ConnectorManager {
 
-    public void startConnServices();
+    public void startConnectors();
 
-    public void stopConnServices();
+    public void stopConnectors();
 
-    public ConnService getConnServiceById(Short connId);
+    public Connector getConnectorById(Integer connId);    
 
-    public HashMap<Short, ConnService> getConnServices();
+    public HashMap<Integer, Connector> getConnectors();
     
-    public HashMap<ConnService,String> status();
 
 }

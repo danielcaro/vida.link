@@ -12,24 +12,22 @@ import java.util.EnumSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.DispatcherType;
-import link.vida.conn.ConnService;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.slf4j.LoggerFactory;
+import link.vida.conn.Connector;
 
 /**
  *
  * @author dcaro
  */
-public class ConnWebServiceJersey1 extends Thread implements ConnService {
+public class ConnWebServiceJersey1 extends Thread implements Connector {
 
     // https://github.com/piersy/jersey2-guice-example-with-test/blob/master/src/test/java/EmbeddedJetty.java
     // guice ws 
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(ConnWebServiceJersey1.class);
     private Server jettyServer;
-    private Integer connectorId;
-
 
     // option
     // https://gist.github.com/dalegaspi/5060b04326965ea704ea
@@ -37,9 +35,9 @@ public class ConnWebServiceJersey1 extends Thread implements ConnService {
     public void run() {
         jettyServer = new Server(88);
 
-        ServletContextHandler context = new ServletContextHandler(jettyServer, "/", ServletContextHandler.SESSIONS);        
+        ServletContextHandler context = new ServletContextHandler(jettyServer, "/", ServletContextHandler.SESSIONS);
         context.addFilter(CORSFilter.class, "/*", EnumSet.<javax.servlet.DispatcherType>of(DispatcherType.INCLUDE, DispatcherType.REQUEST));
-        context.addFilter(GuiceFilter.class, "/*", EnumSet.<javax.servlet.DispatcherType>of(javax.servlet.DispatcherType.REQUEST, javax.servlet.DispatcherType.ASYNC));                        
+        context.addFilter(GuiceFilter.class, "/*", EnumSet.<javax.servlet.DispatcherType>of(javax.servlet.DispatcherType.REQUEST, javax.servlet.DispatcherType.ASYNC));
         context.addServlet(DefaultServlet.class, "/*");
 
         try {
@@ -62,23 +60,13 @@ public class ConnWebServiceJersey1 extends Thread implements ConnService {
         }
     }
 
-    public URI getBaseUri() {
-        return jettyServer.getURI();
-    }
+//    public URI getBaseUri() {
+//        return jettyServer.getURI();
+//    }
 
     @Override
-    public String getConnName() {
+    public String getConnectorName() {
         return "CONN.WS";
-    }
-
-    @Override
-    public Integer getConnectorId() {
-        return connectorId;
-    }
-
-    @Override
-    public void setConnectorId(Integer connectorId) {
-        this.connectorId = connectorId;
     }
 
 }

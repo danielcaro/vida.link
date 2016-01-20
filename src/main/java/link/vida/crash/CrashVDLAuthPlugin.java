@@ -5,8 +5,6 @@
  */
 package link.vida.crash;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 import link.vida.admin.web.jsf.beans.LoginBean;
@@ -14,18 +12,19 @@ import link.vida.security.CallbackHandlerVDL;
 import link.vida.security.VDLAuthConfiguration;
 import org.crsh.auth.AuthenticationPlugin;
 import org.crsh.plugin.CRaSHPlugin;
-import org.crsh.plugin.PluginContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author dcaro
+ * https://github.com/linagora/crash-guice
  */
 public class CrashVDLAuthPlugin extends
         CRaSHPlugin<AuthenticationPlugin> implements
-        AuthenticationPlugin {
+        AuthenticationPlugin<Object> {
 
+    
     final Logger logger = LoggerFactory.getLogger(LoginBean.class);
 
     @Override

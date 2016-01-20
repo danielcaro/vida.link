@@ -5,15 +5,9 @@
  */
 package link.vida.conn;
 
-import java.io.Serializable;
+public interface Connector {
 
-public interface ConnService {
-
-    public String getConnName();
-
-    public Integer getConnectorId();
-
-    public void setConnectorId(Integer connectorId);
+    public String getConnectorName();
 
     public void start();
 

@@ -53,88 +53,13 @@ public class VidaLink {
 
     public static void main(String[] args)
             throws InterruptedException, Exception {
-
-        // TODO: Avoid multiple instances 
-        //http://www.rgagnon.com/javadetails/java-0288.html
+        // TODO: Avoid multiple instances  http://www.rgagnon.com/javadetails/java-0288.html
+        // TODO: Check Postgres before start. http://stackoverflow.com/questions/18756113/how-to-test-connection-to-oracle-database-using-java
         new Migrator().run();
         new VidaLink().startInjector();
-       
-//        testLogin();
-        
         Utils.showBindings(injector);
-
         ServiceManagerImpl sManager = (ServiceManagerImpl) injector.getInstance(ServiceManagerImpl.class);
-
         sManager.start();
-
-    }
-
-    public static void testLogin() {
-        // Obtain a LoginContext, needed for authentication. Tell it
-        // to use the LoginModule implementation specified by the
-        // entry named "Sample" in the JAAS login configuration
-        // file and to also use the specified CallbackHandler.
-        LoginContext lc = null;
-        try {
-            lc = new LoginContext(VDLAuthConfiguration.APP_NAME, new CallbackHandlerVDL("email","user","pass"));
-        } catch (LoginException le) {
-            System.err.println("Cannot create LoginContext (LoginException). "
-                    + le.getMessage());
-            System.exit(-1);
-        } catch (SecurityException se) {
-            System.err.println("Cannot create LoginContext (SecurityException). "
-                    + se.getMessage());
-            System.exit(-1);
-        }
-
-        // the user has 3 attempts to authenticate successfully
-        int i;
-        for (i = 0; i < 3; i++) {
-            try {
-
-                // attempt authentication
-                lc.login();
-
-                // if we return with no exception, authentication succeeded
-                break;
-
-            } catch (LoginException le) {
-
-                System.err.println("Authentication failed:");
-                System.err.println("  " + le.getMessage());
-                try {
-                    Thread.currentThread().sleep(3000);
-                } catch (Exception e) {
-                    // ignore
-                }
-
-            }
-        }
-
-        // did they fail three times?
-        if (i == 3) {
-            System.out.println("Sorry");
-            System.exit(-1);
-        }
-
-        System.out.println("Authentication succeeded!");
-    }
-
-    public static void genJKS() {
-        // http://www.coderanch.com/t/133048/Security/programmatically-create-keystore-import-certificate
-//        try {
-//            KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
-//
-//            char[] password = "some password".toCharArray();
-//            ks.load(null, password);
-//
-//// Store away the keystore.
-//            FileOutputStream fos = new FileOutputStream("algo.jks");
-//            ks.store(fos, password);
-//            fos.close();
-//        } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException ex) {
-//            ex.printStackTrace();
-//        }
     }
 
 }

@@ -6,22 +6,23 @@
 package link.vida.conn.zmq;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.name.Names;
+import com.google.inject.multibindings.Multibinder;
 import com.spotify.netty4.handler.codec.zmtp.ZMTPIdentityGenerator;
 import io.netty.channel.ChannelInitializer;
-import link.vida.conn.ConnService;
+import link.vida.conn.Connector;
 
 /**
  *
  * @author dcaro
  */
-public class ModuleZMQ extends AbstractModule{
+public class ModuleZMQ extends AbstractModule {
 
     @Override
-    protected void configure() {        
+    protected void configure() {
         bind(ZMTPIdentityGenerator.class).to(ZMQIdentityGenerator.class).asEagerSingleton();
         bind(ChannelInitializer.class).to(ZMQChInit.class).asEagerSingleton();
-        bind(ConnService.class).annotatedWith(Names.named("CONN.ZMQ")).to(ConnZMQService.class).asEagerSingleton();
+        Multibinder<Connector> uriBinder = Multibinder.newSetBinder(binder(), Connector.class);
+        uriBinder.addBinding().to(ConnZMQService.class);
     }
-    
+
 }
