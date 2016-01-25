@@ -9,13 +9,10 @@ package link.vida.admin;
  *
  * @author dcaro
  */
-public interface AdminConnService {
+public interface AdminConnector {
 
-    public String getAdminConnName();
+    public String getConnectorName();
     
-    public Integer getAdminConnectorId();
-
-    public void setAdminConnectorId(Integer connectorId);    
 
     public void start();
 

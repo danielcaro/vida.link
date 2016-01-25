@@ -5,13 +5,15 @@
  */
 package link.vida.conn;
 
-public interface Connector {
+public interface Connector {   
 
     public String getConnectorName();
 
-    public void start();
+    public void start() ;
 
-    public void stop();
+    public void stop() ;
+
+//    public int getStatus();
 
 //    // TODO: agrear exepción de dipositivio no se encuentra o mensaje no es posible ser enviado    
 //    public void sendMsgToSessionId(Serializable conSessionId, MessageM2M msg);

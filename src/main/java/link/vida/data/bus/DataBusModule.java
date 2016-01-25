@@ -5,12 +5,17 @@
  */
 package link.vida.data.bus;
 
+import com.google.inject.servlet.ServletModule;
+
 /**
- * https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/CountDownLatch.html
- * No suelta el latch hasta que todos los mensajes han sido recepcionados.
- * 
+ *
  * @author dcaro
  */
-public class DataBusVDL implements DataBus{
-    
+public class DataBusModule extends ServletModule {
+
+    @Override
+    protected void configureServlets() {
+        bind(VDLInbox.class).to(VDLInboxImpl.class).asEagerSingleton();
+    }
+
 }

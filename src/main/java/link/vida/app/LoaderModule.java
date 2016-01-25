@@ -2,12 +2,13 @@ package link.vida.app;
 
 import com.google.inject.AbstractModule;
 import link.vida.admin.AdminConnectorModule;
-import link.vida.admin.web.jsf.ModuleJSF;
+import link.vida.admin.web.jsf.ModuleAdminJSF;
 import link.vida.conn.ConnectorModule;
 import link.vida.conn.socketio.ModuleSocketIO;
 import link.vida.conn.ws.ModuleWS;
 import link.vida.conn.zmq.ModuleZMQ;
 import link.vida.crash.CrashGuiceSupport;
+import link.vida.data.bus.DataBusModule;
 import link.vida.db.ConfigDB;
 import link.vida.security.SecurityModule;
 import link.vida.session.ModulePeerManager;
@@ -35,6 +36,8 @@ public class LoaderModule
         
 
         install(new ModulePeerManager());
+        
+        install(new DataBusModule());
 
         // CONECTORES
         install(new ConnectorModule());
@@ -44,7 +47,7 @@ public class LoaderModule
 
         // ADMIN PLUGINS
         install(new AdminConnectorModule());
-        install(new ModuleJSF());
+        install(new ModuleAdminJSF());
         
 
 

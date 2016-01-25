@@ -60,10 +60,6 @@ public class ConnWebServiceJersey1 extends Thread implements Connector {
         }
     }
 
-//    public URI getBaseUri() {
-//        return jettyServer.getURI();
-//    }
-
     @Override
     public String getConnectorName() {
         return "CONN.WS";

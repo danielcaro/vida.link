@@ -8,19 +8,17 @@ package link.vida.admin.web.jsf;
 import com.google.inject.Singleton;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import link.vida.admin.AdminConnService;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.resource.ResourceCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
+import link.vida.admin.AdminConnector;
 /**
  *
  * @author dcaro
  */
 @Singleton
-public class AdminConnServiceJSF extends Thread implements AdminConnService{
+public class AdminConnectorJSF extends Thread implements AdminConnector{
 
-    private Integer adminConnectorId;
-    
     @Override
     public void run() {
         try {
@@ -40,23 +38,14 @@ public class AdminConnServiceJSF extends Thread implements AdminConnService{
             server.start();
             server.join();
         } catch (Exception ex) {
-            Logger.getLogger(AdminConnServiceJSF.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AdminConnectorJSF.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public String getAdminConnName() {
+    public String getConnectorName() {
        return "ADMIN.JSF";
     }
 
-    @Override
-    public Integer getAdminConnectorId() {
-       return adminConnectorId;
-    }
-
-    @Override
-    public void setAdminConnectorId(Integer connectorId) {
-        this.adminConnectorId = connectorId;
-    }
     
 }

@@ -4,13 +4,10 @@
  */
 package link.vida.conn;
 
-import com.google.inject.Binding;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.google.inject.Key;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +48,6 @@ public class ConnectorManagerImpl implements ConnectorManager {
             connServices.put(id, connector);
             id = id + 1;
         }
-
     }
 
 

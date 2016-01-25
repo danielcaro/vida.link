@@ -5,19 +5,20 @@
  */
 package link.vida.admin.web.jsf;
 
-import com.google.inject.name.Names;
+import com.google.inject.multibindings.Multibinder;
 import com.google.inject.servlet.ServletModule;
-import link.vida.admin.AdminConnService;
+import link.vida.admin.AdminConnector;
 
 /**
  *
  * @author dcaro
  */
-public class ModuleJSF extends ServletModule {
+public class ModuleAdminJSF extends ServletModule {
 
     @Override
     protected void configureServlets() {
-        bind(AdminConnService.class).annotatedWith(Names.named("ADMIN.JSF")).to(AdminConnServiceJSF.class).asEagerSingleton();
+        Multibinder<AdminConnector> uriBinder = Multibinder.newSetBinder(binder(), AdminConnector.class);
+        uriBinder.addBinding().to(AdminConnectorJSF.class );
     }
 
 }

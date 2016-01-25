@@ -4,7 +4,6 @@
  */
 package link.vida.admin;
 
-import link.vida.conn.*;
 import java.util.HashMap;
 
 /**
@@ -17,8 +16,8 @@ public interface AdminConnectorManager {
 
     public void stopAdminConnServices();
 
-    public AdminConnService getAdminConnServiceById(Short connId);
+    public AdminConnector getAdminConnServiceById(Integer connId);
 
-    public HashMap<Short, AdminConnService> getAdminConnServices();
+    public HashMap<Integer, AdminConnector> getAdminConnServices();
 
 }
