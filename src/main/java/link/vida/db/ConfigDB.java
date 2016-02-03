@@ -32,7 +32,7 @@ public class ConfigDB extends PrivateModule {
                 lazyLoadingEnabled(true);
                 multipleResultSetsEnabled(true);
                 useGeneratedKeys(true);
-//                useCacheEnabled(true);
+                useCacheEnabled(true);
                 environmentId("vdl");
             }
         });

@@ -29,9 +29,18 @@ public class Migrator {
     public void run() throws Exception {
         PrintStream ps = new PrintStream(new LoggingOutputStream(log, false), true);
 
-        String path = Thread.currentThread().getContextClassLoader()
-                .getResource("migrate").getPath();
+        String path = "migrate";
+        // this.getClass().getClassLoader().getResource("migrate").getPath();
+        // scriptsDir is the only required parameter and it indicates the directory 
+        //containing the migration scripts. Note that the directory must exist 
+        // in the file system of the runtime environment.
+        // en caso contrario hay que usar Java ...
+        
+        log.info("MIGRATE PATH :" + path);
+
         final File folder = new File(path);
+        
+        log.info("IS DIRECTORY:" + folder.isDirectory());
 
         final Properties prop = FileConfig.
                 getPropertiesFromFile("db.migrate.properties");

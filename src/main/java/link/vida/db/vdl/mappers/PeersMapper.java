@@ -16,6 +16,7 @@ import org.apache.ibatis.annotations.Select;
  * http://mybatis.co.uk/index.php/category/mybatis-annotations-examples
  * @author dcaro
  */
+// al hac
 //@CacheNamespace(implementation=org.mybatis.caches.ehcache.EhBlockingCache.class)
 public interface PeersMapper {
        
