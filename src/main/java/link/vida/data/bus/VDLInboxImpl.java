@@ -5,8 +5,6 @@
  */
 package link.vida.data.bus;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import link.vida.msgs.VDLAck;
 import link.vida.msgs.VDLMsgData;
 import rx.Observable;
@@ -24,10 +22,11 @@ public class VDLInboxImpl implements VDLInbox {
 
     @Override
     public Observable<VDLAck> rcvMsg(final VDLMsgData inComeMsg) {
-        return Observable.create(subscriber -> {
+        return Observable.create((Subscriber<? super VDLAck> subscriber) -> {
             try {
                 subscriber.onStart();
-                Thread.sleep(2000);
+                Thread.sleep(100);
+                // Un ack para cada Destino
                 subscriber.onNext(new VDLAck());                
                 System.out.println("INCOME MSG" + inComeMsg);                               
                 subscriber.onCompleted();

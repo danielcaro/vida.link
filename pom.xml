@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>net.vidaware.vidalink</groupId>
+    <groupId>net.vidaware</groupId>
     <artifactId>vida.link</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -31,13 +31,23 @@
         </repository>
     </repositories>
     
-    <!-- NECESARIO PARA LOS HTML -->
+    <!--http://stackoverflow.com/questions/574594/how-can-i-create-an-executable-jar-with-dependencies-using-maven-->
     <build>
-        <resources>
+           <resources>
             <resource>
+                <directory>src/main/webapp</directory>
+                <targetPath>webapp</targetPath>
+           </resource>
+           <resource>
+                <directory>src/main/webapp</directory>
+                <targetPath>webapp</targetPath>
+           </resource>
+           <resource>
                 <filtering>false</filtering>
                 <directory>src/main/resources</directory>
             </resource>
+
+         <!--NECESARIO PARA LOS HTML  WICKET-->            
             <resource>
                 <filtering>false</filtering>
                 <directory>src/main/java</directory>
@@ -49,18 +59,108 @@
                 </excludes>
             </resource>
         </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId> 
-                <version>3.0.1</version>
-                <extensions>true</extensions>
+<plugins>
+ <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-dependency-plugin</artifactId>
+    <version>2.10</version>
+    <executions>
+        <execution>
+            <id>copy-dependencies</id>
+            <phase>prepare-package</phase>
+            <goals>
+                <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+                <outputDirectory>${project.build.directory}/dist</outputDirectory>
+                <overWriteReleases>false</overWriteReleases>
+                <overWriteSnapshots>false</overWriteSnapshots>
+                <overWriteIfNewer>true</overWriteIfNewer>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-jar-plugin</artifactId>
+    <version>2.6</version>
+    <configuration>
+        <archive>
+            <manifest>
+                <addClasspath>true</addClasspath>
+                <classpathPrefix>dist/</classpathPrefix>
+                <mainClass>link.vida.app.VidaLink</mainClass>               
+            </manifest>
+        </archive>
+    </configuration>
+</plugin>
+
+<!--        
+
+  
+      
+SHADED y ASSEMBLY override services files of CRASH
+
+<plugin>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <configuration>
+                            <outputDirectory>dist</outputDirectory>
+                            <archive>
+                                    <manifest>
+                                            <mainClass>link.vida.app.VidaLink</mainClass>
+                                    </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>${project.artifactId}-${project.version}</finalName>
+                            <appendAssemblyId>false</appendAssemblyId>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>make-assembly</id>  this is used for inheritance merges 
+                                <phase>package</phase>  bind to the packaging phase 
+                                <goals>
+                                        <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                </plugin>-->
+            
+<!--            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.4.3</version>
                 <configuration>
-                    <instructions>
-                        <_include>-target/classes/META-INF/${project.artifactId}.bnd</_include> (4)
-                    </instructions>
+                    <transformers>
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>link.vida.app.VidaLink</mainClass>
+                            </transformer>
+                    </transformers>
+                   <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
                 </configuration>
-            </plugin>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                           <shadedArtifactAttached>true</shadedArtifactAttached>
+                           <shadedClassifierName>standalone</shadedClassifierName>  Any name that makes sense 
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>-->
         </plugins>
     </build>
     
@@ -83,45 +183,37 @@
             <version>0.4.0</version>
         </dependency>
                 
+        
+        <!-- JETTY -->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
             <version>9.3.6.v20151106</version>
-        </dependency>
-        
+        </dependency>        
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
             <version>9.3.6.v20151106</version>
-        </dependency> 
-        
+        </dependency>         
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlets</artifactId>
             <version>9.3.6.v20151106</version>
         </dependency>         
-        
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-        </dependency>
-        
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-webapp</artifactId>
             <version>9.3.6.v20151106</version>
         </dependency>
         
+<!--        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-jmx</artifactId>
+            <version>9.3.6.v20151106</version>
+        </dependency>        -->
         
-        <dependency>
-            <groupId>com.thetransactioncompany</groupId>
-            <artifactId>cors-filter</artifactId>
-            <version>2.5</version>
-        </dependency>
-        
-        
-        <!--        <dependency>
+        <!-- JSF SUN -->
+<!--        <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-api</artifactId>
             <version>2.2.12</version>
@@ -130,9 +222,9 @@
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-impl</artifactId>
             <version>2.2.12</version>
-        </dependency>
-        -->
-      
+        </dependency>-->
+        <!-- -->
+        
         <!-- MY FACES -->
         <!-- JSF , PRIMEFACES y EL -->
         <dependency>
@@ -147,29 +239,67 @@
             <version>2.2.8</version>
             <scope>compile</scope>
         </dependency>      
-        <!-- CDI Weld -->
-        <!--http://www.eclipse.org/jetty/documentation/current/framework-weld.html-->
-        <!--http://www.eclipse.org/jetty/documentation/current/startup-modules.html-->
-        <!-- EL API -->
+                
+        
+        
+        <!-- COMMONS -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        
+        
+<!-- hace falllar el sistema completo de JSF .-->       
+<!--        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>       <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.2</version>
+        </dependency>     -->
+        
+        
+        
+           
         <dependency>
             <groupId>javax.el</groupId>
             <artifactId>el-api</artifactId>
-            <version>2.2</version>
-            <scope>compile</scope>
-        </dependency>
-
+            <version>2.2</version>   
+            <scope>compile</scope>     
+        </dependency>        
+         
         <dependency>
             <groupId>org.glassfish.web</groupId>
             <artifactId>el-impl</artifactId>
             <version>2.2</version>
             <scope>runtime</scope>
         </dependency>
+      
+      <!-- filtro de CORS -->
+        <dependency>
+            <groupId>com.thetransactioncompany</groupId>
+            <artifactId>cors-filter</artifactId>
+            <version>2.5</version>
+        </dependency>
+        
+        
+        
+        <!-- CDI Weld -->
+        <!--http://www.eclipse.org/jetty/documentation/current/framework-weld.html-->
+        <!--http://www.eclipse.org/jetty/documentation/current/startup-modules.html-->
+        <!-- EL API -->
+       
 
         <dependency>
             <groupId>net.bootsfaces</groupId>
             <artifactId>bootsfaces</artifactId>
-            <version>0.9.0-SNAPSHOT</version>
-            <scope>runtime</scope>
+            <version>0.8.1</version>   
+            <!--<version>0.9.0-SNAPSHOT</version>-->
+            <!-- ESPERAR VERSIOn 0.9 OFICIAL -->
+            <scope>compile</scope>
         </dependency>
         
         <dependency>

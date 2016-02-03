@@ -1,6 +1,7 @@
 package link.vida.conn.socketio;
 
 import com.corundumstudio.socketio.SocketIOServer;
+import com.corundumstudio.socketio.listener.ConnectListener;
 import com.google.inject.Inject;
 import link.vida.msgs.VDLMsgData;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,9 @@ public class ConnSocketIO extends Thread implements Connector {
 
     @Inject
     VDLMsgDataListener msgDataListener;
+    
+    @Inject 
+    ConnectListener connectListener;
 
     @Inject
     SocketIOServer socketIOServer;
@@ -24,7 +28,10 @@ public class ConnSocketIO extends Thread implements Connector {
     @Override
     public void run() {
         socketIOServer.addEventListener("vdlMsgData", VDLMsgData.class, msgDataListener);
+        socketIOServer.addConnectListener(connectListener);
         socketIOServer.start();
+        
+       
     }
 
     @Override

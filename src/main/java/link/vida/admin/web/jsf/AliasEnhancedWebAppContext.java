@@ -15,12 +15,18 @@ import org.eclipse.jetty.webapp.WebAppContext;
  */
 public class AliasEnhancedWebAppContext extends WebAppContext {
 
+    public AliasEnhancedWebAppContext(String webApp, String contextPath) {
+        super(webApp, contextPath);
+    }
+    
+    
+
     @Override
     public String getResourceAlias(String alias) {
+        
 
         @SuppressWarnings("unchecked")
-        Map<String, String> resourceAliases = 
-            (Map<String, String>) getResourceAliases();
+        Map<String, String> resourceAliases = (Map<String, String>) getResourceAliases();
 
         if (resourceAliases == null) {
             return null;
@@ -30,11 +36,13 @@ public class AliasEnhancedWebAppContext extends WebAppContext {
             resourceAliases.entrySet()) {
 
             if (alias.startsWith(oneAlias.getKey())) {
-                return alias.replace(
-                    oneAlias.getKey(), oneAlias.getValue());
+                return alias.replace(oneAlias.getKey(), oneAlias.getValue());
             }
         }
 
         return null;
     }
+    
+    
+    
 }

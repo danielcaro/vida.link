@@ -8,11 +8,12 @@
 
     <!-- Define the JSF listener class when using the Jetty Maven Plugin 
     with Jetty8 -->
+    
     <listener>
         <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
-        <!--with mojarra = com.sun.faces.config.ConfigureListener--> 
-        <!--https://jsflive.wordpress.com/2012/08/19/jsf-2-on-jetty-8/--> 
     </listener>
+    
+
 
     <!-- File(s) appended to a request for a URL that is not mapped to a 
     web component -->
@@ -113,7 +114,7 @@
     
     
     
-   <!-- http://wiki.apache.org/myfaces/Secure_Your_Application -->
+    <!-- http://wiki.apache.org/myfaces/Secure_Your_Application -->
     
     
         
