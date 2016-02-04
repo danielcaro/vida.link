@@ -26,7 +26,7 @@ public class ConnSocketIO extends Thread implements Connector {
     SocketIOServer socketIOServer;
 
     @Override
-    public void run() {
+    public void run() {        
         socketIOServer.addEventListener("vdlMsgData", VDLMsgData.class, msgDataListener);
         socketIOServer.addConnectListener(connectListener);
         socketIOServer.start();
