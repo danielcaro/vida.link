@@ -51,13 +51,11 @@ public class VidaLink {
         // TODO: Avoid multiple instances  http://www.rgagnon.com/javadetails/java-0288.html
         // TODO: Check Postgres before start. http://stackoverflow.com/questions/18756113/how-to-test-connection-to-oracle-database-using-java
 
-        new Migrator().run();
+//        new Migrator().run();
         new VidaLink().startInjector();
         Utils.showBindings(injector);
         ServiceManagerImpl sManager = (ServiceManagerImpl) injector.getInstance(ServiceManagerImpl.class);
         sManager.start();
-
-
         
     }
 

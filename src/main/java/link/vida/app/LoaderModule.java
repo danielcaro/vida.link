@@ -32,7 +32,7 @@ public class LoaderModule
         install(new SecurityModule());
         
         // cambiar nombre a console .
-        install(new CrashGuiceSupport()); //import crash in my app
+//        install(new CrashGuiceSupport()); //import crash in my app
         
 
         install(new ModulePeerManager());
