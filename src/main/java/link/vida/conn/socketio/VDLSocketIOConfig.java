@@ -6,7 +6,6 @@
 package link.vida.conn.socketio;
 
 import com.corundumstudio.socketio.Configuration;
-import java.io.InputStream;
 
 /**
  *
@@ -15,8 +14,9 @@ import java.io.InputStream;
 public class VDLSocketIOConfig extends Configuration {
 
     public VDLSocketIOConfig() {
-        setHostname("localhost");
-        setPort(9090);
+        super.setHostname("vida.link");
+        super.setPort(9090);        
+        //super.set //enableCors(new EnableCorsAttribute(Properties.Settings.Default.Cors, "", ""))
 //        InputStream stream = VDLSocketIOConfig.class.getResourceAsStream("algo.jks");
 //        setKeyStore(stream);
     }

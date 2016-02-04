@@ -30,8 +30,6 @@ public class ConnSocketIO extends Thread implements Connector {
         socketIOServer.addEventListener("vdlMsgData", VDLMsgData.class, msgDataListener);
         socketIOServer.addConnectListener(connectListener);
         socketIOServer.start();
-        
-       
     }
 
     @Override
