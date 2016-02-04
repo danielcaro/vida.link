@@ -41,7 +41,7 @@ public class LoaderModule
 
         // CONECTORES
         install(new ConnectorModule());
-        install(new ModuleWS());
+//        install(new ModuleWS());
         install(new ModuleZMQ());
         install(new ModuleSocketIO());
 

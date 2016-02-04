@@ -25,6 +25,12 @@ public class CrashPluginsModule extends AbstractModule {
     @Override
     protected void configure() {
         ClassLoader loader = getClass().getClassLoader();
+        
+     /*    The class loader to be used to load provider-configuration files
+     *         and provider classes, or <tt>null</tt> if the system class
+     *         loader (or, failing that, the bootstrap class loader) is to be
+     *         used */
+        log.info("CLASS LOADER CRASH: " + loader);
         PluginDiscovery discovery = new ServiceLoaderDiscovery(loader);
 
         Multibinder<CRaSHPlugin<?>> pluginBinder

@@ -25,12 +25,12 @@ public class CrashGuiceSupport extends AbstractModule {
 
     private static final String AUTOSTART = "autostart";
 
-    public static class Bootstrap extends PluginLifeCycle {
+    public static final class Bootstrap extends PluginLifeCycle {
 
         private final Injector injector;
-        private ClassLoader loader;
+        private final ClassLoader loader;
         private final CrashGuiceConfiguration configuration;
-        private PluginContext context;
+        private final PluginContext context;
 
         @Inject
         public Bootstrap(Injector injector, PluginDiscovery pluginDiscovery, CrashGuiceConfiguration configuration,
