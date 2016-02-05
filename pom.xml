@@ -390,35 +390,7 @@ SHADED y ASSEMBLY override services files of CRASH
             <version>1.9.13</version>
         </dependency>
         
-        
-  
-        
-        
-        <!-- WICKET -->
-        <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-core</artifactId>
-            <version>7.1.0</version>
-        </dependency>       
- 
-        <dependency>
-            <groupId>de.agilecoders.wicket</groupId>
-            <artifactId>wicket-bootstrap-core</artifactId>
-            <version>0.10.3</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>de.agilecoders.wicket</groupId>
-            <artifactId>wicket-bootstrap-extensions</artifactId>
-            <version>0.10.3</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>de.agilecoders.wicket</groupId>
-            <artifactId>wicket-bootstrap-themes</artifactId>
-            <version>0.10.3</version>
-        </dependency>
-        
+       
         
         
         
@@ -512,11 +484,11 @@ SHADED y ASSEMBLY override services files of CRASH
             <version>3.7</version>
         </dependency>           
         
-        <dependency>
+<!--        <dependency>
             <groupId>org.mybatis.caches</groupId>
             <artifactId>mybatis-ehcache</artifactId>
             <version>1.0.3</version>
-        </dependency>                
+        </dependency>                -->
         
         
         <dependency>

@@ -30,6 +30,12 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+<!--https://myfaces.apache.org/core20/myfaces-impl/webconfig.html-->
+    <context-param>
+        <param-name>org.apache.myfaces.annotation.SCAN_PACKAGES </param-name>
+        <param-value>link.vida.admin.web.jsf.beans</param-value>
+    </context-param>
+
     <!-- Map following files to the JSF servlet -->
     <servlet-mapping>
         <servlet-name>faces</servlet-name>

@@ -44,11 +44,17 @@ public class AdminConnectorJSF extends Thread implements AdminConnector {
             wac.setContextPath("/");
 
             // http://forum.primefaces.org/viewtopic.php?f=10&t=25025
-            wac.setBaseResource(new ResourceCollection(new String[]{webappDir, "./target"}));
-            wac.setResourceAlias("/WEB-INF/classes/", "/classes/");
-            wac.setDisplayName("VidaLink WebAdmin");
-
+            // Ver la forma que llame dentro del mismo JAR.
+            if (webappDir.contains(".jar")) {
+                wac.setBaseResource(new ResourceCollection(new String[]{webappDir, "."}));
+//                wac.setResourceAlias("/WEB-INF/classes/", "");
+            } else {
+                wac.setBaseResource(new ResourceCollection(new String[]{webappDir, "./target"}));
+//                wac.setResourceAlias("/WEB-INF/classes/", "/classes/");
+            }
             
+
+            wac.setDisplayName("vida.link web");
             server.setHandler(wac);
             server.setStopAtShutdown(true);
             server.start();
@@ -96,7 +102,6 @@ public class AdminConnectorJSF extends Thread implements AdminConnector {
 //        context.setWelcomeFiles(new String[]{"index.xhtml"});        
 //
 //    }
-
     ///https://github.com/stefoan/primefaces-jetty/blob/master/src/main/java/de/stefanlindenberg/web/pfjetty/StandaloneJetty.java
 //    @Override
 //    public void run() {

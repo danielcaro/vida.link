@@ -17,7 +17,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import link.vida.admin.web.wicket.PeerInfo;
 import link.vida.db.vdl.VdlDao;
 import link.vida.session.VDLPeersManager;
 import link.vida.session.VDLPeer;
@@ -39,24 +38,24 @@ public class WebServiceVDL {
     @Context 
     HttpServletRequest request;
 
-    @GET
-    @Path("list")
-    @Produces(MediaType.APPLICATION_JSON)
+//    @GET
+//    @Path("list")
+//    @Produces(MediaType.APPLICATION_JSON)
     // @Consumes(MediaType.APPLICATION_JSON)
-    public List<PeerInfo> list() {
+//    public List<PeerInfo> list() {
 
-        List<PeerInfo> newList = new ArrayList<>();
-        Iterator<VDLPeer> peersIterator = peersManager.peers().iterator();
-        while (peersIterator.hasNext()) {
-            PeerInfo peerInf = new PeerInfo();
-            peerInf.setId("" + peersIterator.next().getPeerId());
-            newList.add(peerInf);
-        }
-        HttpSession session = request.getSession();
-             
-        log.info("RETURN:" + newList.size() + " :" + session.getId());
-        return newList;
-    }
+//        List<PeerInfo> newList = new ArrayList<>();
+//        Iterator<VDLPeer> peersIterator = peersManager.peers().iterator();
+//        while (peersIterator.hasNext()) {
+//            PeerInfo peerInf = new PeerInfo();
+//            peerInf.setId("" + peersIterator.next().getPeerId());
+//            newList.add(peerInf);
+//        }
+//        HttpSession session = request.getSession();
+//             
+//        log.info("RETURN:" + newList.size() + " :" + session.getId());
+//        return null;
+//    }
 
     @GET
     @Path("list_db")
