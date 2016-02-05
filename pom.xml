@@ -400,6 +400,13 @@ SHADED y ASSEMBLY override services files of CRASH
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.12</version>
         </dependency>
+        
+        
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+			<version>1.7.7</version>
+		</dependency>        
 
         <dependency>
             <groupId>com.google.guava</groupId>

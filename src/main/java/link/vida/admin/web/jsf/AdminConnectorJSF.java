@@ -53,7 +53,6 @@ public class AdminConnectorJSF extends Thread implements AdminConnector {
 //                wac.setResourceAlias("/WEB-INF/classes/", "/classes/");
             }
             
-
             wac.setDisplayName("vida.link web");
             server.setHandler(wac);
             server.setStopAtShutdown(true);
