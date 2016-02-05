@@ -55,7 +55,7 @@ public class AliasEnhancedWebAppContext extends WebAppContext {
     
 
 //    @Override
-    public String getResourceAlias(String alias) {        
+    public String getResourceAlias3(String alias) {        
         logger.info("getResourceAlias:" + alias);
 
         @SuppressWarnings("unchecked")
