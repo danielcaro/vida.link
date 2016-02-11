@@ -25,7 +25,7 @@ import link.vida.conn.Connector;
 @Singleton
 public class ConnZMQService extends Thread implements Connector {
 
-    static final int PORT = Integer.parseInt(System.getProperty("port", "777"));
+    static final int PORT = Integer.parseInt(System.getProperty("port", "9091"));
 
     @Inject
     ZMQChInit zMQChInit;

@@ -33,7 +33,7 @@ public class ConnWebServiceJersey1 extends Thread implements Connector {
     // https://gist.github.com/dalegaspi/5060b04326965ea704ea
     @Override
     public void run() {
-        jettyServer = new Server(88);
+        jettyServer = new Server(9092);
 
         ServletContextHandler context = new ServletContextHandler(jettyServer, "/", ServletContextHandler.SESSIONS);
         context.addFilter(CORSFilter.class, "/*", EnumSet.<javax.servlet.DispatcherType>of(DispatcherType.INCLUDE, DispatcherType.REQUEST));
