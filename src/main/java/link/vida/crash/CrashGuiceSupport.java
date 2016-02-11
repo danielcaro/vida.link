@@ -113,7 +113,7 @@ public class CrashGuiceSupport extends AbstractModule {
         // https://thedet.wordpress.com/2011/01/23/guice-2-0-multibinder-java-serviceloader-plugin-mechanism/
         
         return CrashGuiceConfiguration.builder()
-                .property(SSHPlugin.SSH_PORT.getName(), 2222)
+                .property(SSHPlugin.SSH_PORT.getName(), 9022)
                 .property(AuthenticationPlugin.AUTH.getName(), "vida.link.crash")
                 .build();
     }
