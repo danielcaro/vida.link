@@ -9,9 +9,13 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Stage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.URL;
 import java.util.logging.LogManager;
 import link.vida.db.Migrator;
 import link.vida.utils.Utils;
+import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
@@ -49,11 +53,13 @@ public class VidaLink {
     }
 
     public static void main(String[] args)
-            throws InterruptedException, Exception {
-
+            throws InterruptedException, Exception {        
+        
+        PropertyConfigurator.configure(new FileInputStream("log4j.properties"));
+        
         LogManager.getLogManager().reset();
         SLF4JBridgeHandler.install();
-
+     
         // TODO: Avoid multiple instances  http://www.rgagnon.com/javadetails/java-0288.html
         // TODO: Check Postgres before start. http://stackoverflow.com/questions/18756113/how-to-test-connection-to-oracle-database-using-java
         new Migrator().run();
