@@ -55,6 +55,7 @@ public class VidaLink {
     public static void main(String[] args)
             throws InterruptedException, Exception {        
         
+        // http://stackoverflow.com/questions/8474954/read-properties-file-using-slf4j
         PropertyConfigurator.configure(new FileInputStream("log4j.properties"));
         
         LogManager.getLogManager().reset();
