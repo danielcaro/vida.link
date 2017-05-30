@@ -58,8 +58,8 @@ public class VDLMsgDataListenerImpl implements VDLMsgDataListener<VDLMsgData> {
                 if (ackRequest.isAckRequested()) {
                     ackRequest.sendAckData(ack);
                 }
-                server.getClient(client.getSessionId()).sendEvent("vdlMsgData", data);
-//                server.getBroadcastOperations().sendEvent("vdlMsgData", data);
+//                server.getClient(client.getSessionId()).sendEvent("vdlMsgData", data);
+                server.getBroadcastOperations().sendEvent("vdlMsgData", data);
             }
 
         });
